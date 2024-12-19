@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lbtaikhoan = new Label();
-            lbmatkhau = new Label();
-            tbtaikhoan = new TextBox();
-            tbmatkhau = new TextBox();
+            lblTaiKhoan = new Label();
+            lblMatKhau = new Label();
+            txtTaiKhoan = new TextBox();
+            txtMatKhau = new TextBox();
             button1 = new Button();
             button2 = new Button();
             cbbloai = new ComboBox();
@@ -40,36 +40,36 @@
             // 
             // lbtaikhoan
             // 
-            lbtaikhoan.AutoSize = true;
-            lbtaikhoan.Location = new Point(32, 24);
-            lbtaikhoan.Name = "lbtaikhoan";
-            lbtaikhoan.Size = new Size(71, 20);
-            lbtaikhoan.TabIndex = 0;
-            lbtaikhoan.Text = "Tài khoản";
+            lblTaiKhoan.AutoSize = true;
+            lblTaiKhoan.Location = new Point(32, 24);
+            lblTaiKhoan.Name = "lbtaikhoan";
+            lblTaiKhoan.Size = new Size(71, 20);
+            lblTaiKhoan.TabIndex = 0;
+            lblTaiKhoan.Text = "Tài khoản";
             // 
             // lbmatkhau
             // 
-            lbmatkhau.AutoSize = true;
-            lbmatkhau.Location = new Point(33, 77);
-            lbmatkhau.Name = "lbmatkhau";
-            lbmatkhau.Size = new Size(70, 20);
-            lbmatkhau.TabIndex = 1;
-            lbmatkhau.Text = "Mật khẩu";
+            lblMatKhau.AutoSize = true;
+            lblMatKhau.Location = new Point(33, 77);
+            lblMatKhau.Name = "lbmatkhau";
+            lblMatKhau.Size = new Size(70, 20);
+            lblMatKhau.TabIndex = 1;
+            lblMatKhau.Text = "Mật khẩu";
             // 
             // tbtaikhoan
             // 
-            tbtaikhoan.Location = new Point(109, 24);
-            tbtaikhoan.Name = "tbtaikhoan";
-            tbtaikhoan.Size = new Size(222, 27);
-            tbtaikhoan.TabIndex = 2;
+            txtTaiKhoan.Location = new Point(109, 24);
+            txtTaiKhoan.Name = "tbtaikhoan";
+            txtTaiKhoan.Size = new Size(222, 27);
+            txtTaiKhoan.TabIndex = 2;
             // 
             // tbmatkhau
             // 
-            tbmatkhau.Location = new Point(109, 74);
-            tbmatkhau.Name = "tbmatkhau";
-            tbmatkhau.Size = new Size(222, 27);
-            tbmatkhau.TabIndex = 3;
-            tbmatkhau.UseSystemPasswordChar = true;
+            txtMatKhau.Location = new Point(109, 74);
+            txtMatKhau.Name = "tbmatkhau";
+            txtMatKhau.Size = new Size(222, 27);
+            txtMatKhau.TabIndex = 3;
+            txtMatKhau.UseSystemPasswordChar = true;
             // 
             // button1
             // 
@@ -119,10 +119,10 @@
             Controls.Add(cbbloai);
             Controls.Add(button2);
             Controls.Add(button1);
-            Controls.Add(tbmatkhau);
-            Controls.Add(tbtaikhoan);
-            Controls.Add(lbmatkhau);
-            Controls.Add(lbtaikhoan);
+            Controls.Add(txtMatKhau);
+            Controls.Add(txtTaiKhoan);
+            Controls.Add(lblMatKhau);
+            Controls.Add(lblTaiKhoan);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Name = "Dangnhap";
             StartPosition = FormStartPosition.CenterScreen;
@@ -134,10 +134,10 @@
 
         #endregion
 
-        private Label lbtaikhoan;
-        private Label lbmatkhau;
-        private TextBox tbtaikhoan;
-        private TextBox tbmatkhau;
+        private Label lblTaiKhoan;
+        private Label lblMatKhau;
+        private TextBox txtTaiKhoan;
+        private TextBox txtMatKhau;
         private Button button1;
         private Button button2;
         private ComboBox cbbloai;

@@ -49,7 +49,7 @@
             tabPage2 = new TabPage();
             dataGridView1 = new DataGridView();
             groupBox3 = new GroupBox();
-            tbDiaChi = new TextBox();
+            txtDiaChi = new TextBox();
             groupBox1 = new GroupBox();
             listView2 = new ListView();
             btdatban = new Button();
@@ -317,7 +317,7 @@
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(tbDiaChi);
+            groupBox3.Controls.Add(txtDiaChi);
             groupBox3.Location = new Point(448, 252);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(335, 61);
@@ -327,11 +327,11 @@
             // 
             // tbDiaChi
             // 
-            tbDiaChi.Location = new Point(0, 26);
-            tbDiaChi.Multiline = true;
-            tbDiaChi.Name = "tbDiaChi";
-            tbDiaChi.Size = new Size(332, 32);
-            tbDiaChi.TabIndex = 0;
+            txtDiaChi.Location = new Point(0, 26);
+            txtDiaChi.Multiline = true;
+            txtDiaChi.Name = "tbDiaChi";
+            txtDiaChi.Size = new Size(332, 32);
+            txtDiaChi.TabIndex = 0;
             // 
             // groupBox1
             // 
@@ -799,7 +799,7 @@
         private TabPage tabPage2;
         private DataGridView dataGridView1;
         private GroupBox groupBox3;
-        private TextBox tbDiaChi;
+        private TextBox txtDiaChi;
         private GroupBox groupBox1;
         private ListView listView2;
         private Button btdatban;

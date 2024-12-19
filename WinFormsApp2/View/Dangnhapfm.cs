@@ -22,8 +22,8 @@ namespace QuanLySuShi
 
         private void btdangnhap_Click(object sender, EventArgs e)
         {
-            string tendangnhap = tbtaikhoan.Text;
-            string matkhau = tbmatkhau.Text;
+            string tendangnhap = txtTaiKhoan.Text;
+            string matkhau = txtMatKhau.Text;
             int loai = cbbloai.SelectedIndex;
             if (!kiemtranhap())
             {
@@ -78,16 +78,16 @@ namespace QuanLySuShi
 
         private bool kiemtranhap()
         {
-            if (tbtaikhoan.Text == "")
+            if (txtTaiKhoan.Text == "")
             {
                 MessageBox.Show("vui long nhap tai khoan ");
-                tbtaikhoan.Focus();
+                txtTaiKhoan.Focus();
                 return false;
             }
-            if (tbmatkhau.Text == "")
+            if (txtMatKhau.Text == "")
             {
                 MessageBox.Show("vui long nhap mat khau");
-                tbmatkhau.Focus();
+                txtMatKhau.Focus();
                 return false;
             }
             if (cbbloai.SelectedIndex == -1)
@@ -112,12 +112,12 @@ namespace QuanLySuShi
         private void cbbloai_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbbloai.SelectedIndex == 0)
-               { tbmatkhau.Text = "password456";
-                tbtaikhoan.Text = "tranthib";
+               { txtMatKhau.Text = "password456";
+                txtTaiKhoan.Text = "tranthib";
             }
             else
-              {  tbmatkhau.Text = "password789";
-                tbtaikhoan.Text = "nguyenvanc";
+              {  txtMatKhau.Text = "password789";
+                txtTaiKhoan.Text = "nguyenvanc";
             }
            
         }

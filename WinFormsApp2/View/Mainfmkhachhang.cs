@@ -225,7 +225,7 @@ namespace QuanLySuShi
 
                 return;
             }
-            if (string.IsNullOrWhiteSpace(tbDiaChi.Text))
+            if (string.IsNullOrWhiteSpace(txtDiaChi.Text))
             {
                 MessageBox.Show("Vui lòng nhập địa chỉ!");
                 return;
@@ -246,7 +246,7 @@ namespace QuanLySuShi
             if (isSuccess)
             {
                 // Tạo phiếu giao đi
-                if (PhieuDatMonGiaoDiDAO.CreatePhieuDatMonGiaoDi(maphieumoi, DateTime.Now, null, tbghichu.Text, null, tbDiaChi.Text))
+                if (PhieuDatMonGiaoDiDAO.CreatePhieuDatMonGiaoDi(maphieumoi, DateTime.Now, null, tbghichu.Text, null, txtDiaChi.Text))
                 {
                     MessageBox.Show("Tạo Phiếu và Thêm món ăn vào phiếu thành công!", "Thông báo");
 
@@ -273,7 +273,7 @@ namespace QuanLySuShi
                 HoaDonDAO.AddHoaDon(mahoadon, (cbbchinhanh.SelectedItem as ChiNhanh).MaChiNhanh, maphieumoi, UuDaiDAO.GetUuDais(maUuDai: mauudai)[0]);
 
                 listView2.Items.Clear();
-                tbDiaChi.Clear();
+                txtDiaChi.Clear();
                 tbghichu.Clear();
                 LoadDonHang();
 
