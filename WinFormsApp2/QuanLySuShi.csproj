@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DTO\PhieuDatMonTrucTuyen.cs" />
+    <Compile Remove="Model\DTO\PhieuDatMonTrucTuyen.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="DTO\PhieuDatMonTrucTuyen.cs" />
+    <None Include="Model\DTO\PhieuDatMonTrucTuyen.cs" />
   </ItemGroup>
 
   <ItemGroup>
