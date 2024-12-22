@@ -211,15 +211,15 @@ END;
 go
 ---------------------11
 
-create PROCEDURE dbo.sp_CreatePhieuDatMon
+CREATE PROCEDURE dbo.sp_CreatePhieuDatMon
     @MaPhieu CHAR(10),
     @NhanVienLap CHAR(10) = NULL,
     @MaChiNhanh CHAR(10),
-    @MaKhachhang CHAR(10) = NULL
+    @MaKhachhang CHAR(10) = NULL,
+    @LoaiPhieu NVARCHAR(50) = N'Trực Tiếp' -- Thêm tham số @LoaiPhieu
 AS
 BEGIN
     DECLARE @NgayLap DATETIME = GETDATE(); 
-    DECLARE @LoaiPhieu NVARCHAR(50) = N'Trực Tiếp'; 
 
     -- Thực hiện câu lệnh INSERT
     INSERT INTO PhieuDatMon (MaPhieu, NhanVienLap, NgayLap, MaChiNhanh, LoaiPhieu, MaKhachhang)
@@ -227,7 +227,7 @@ BEGIN
     
     SELECT 'Phieu Dat Mon Created Successfully' AS Status;
 END;
-go
+GO
 
 --------------12
 CREATE PROCEDURE dbo.sp_AddHoaDon

@@ -49,7 +49,7 @@ namespace QuanLySuShi
             LoadThongtinThe();
             LoadThongtinKhach();
         }
-        void LoadThongtinThe()
+        void LoadThongtinThe() //Tải thông tin của một thẻ khách hàng
         {
             TheKhachHang tkh = TheKhachHangDAO.GetTheKhachHang(maKhachHang: Dangnhap.user.MaDinhDanh);
             if (tkh != null)
@@ -57,9 +57,9 @@ namespace QuanLySuShi
                 tbDiem.Text = tkh.DiemTichLuy?.ToString() ?? "";
                 tbLoaiThe.Text = tkh.LoaiThe ?? "";
             }
-
         }
-        void LoadThongtinKhach()
+
+        void LoadThongtinKhach() //Tải thông tin khách hàng
         {
             KhachHang kh = KhachHangDAO.GetKhachHangByMakhachHang(makhach: Dangnhap.user.MaDinhDanh);
             if (kh != null)
@@ -71,9 +71,8 @@ namespace QuanLySuShi
                 cbbgioitinh_ql.Text = kh.GioiTinh;
                 tbcccd_ql.Text = kh.CCCD;
             }
-
         }
-        void LoadDonHang()
+        void LoadDonHang() //Tải đơn hànghàng
         {
             dataGridView2.DataSource = PhieudatmonDAO.GetPhieuDatMonByMaKhachHang((Dangnhap.user as KhachHang).MaDinhDanh);
         }
@@ -84,28 +83,26 @@ namespace QuanLySuShi
         }
 
 
-        private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
+        private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)  //Đóng cửa sổ hiện tại
         {
             this.Close();
         }
 
-        private void thoátToolStripMenuItem_Click(object sender, EventArgs e)
+        private void thoátToolStripMenuItem_Click(object sender, EventArgs e) // thoát chương trình
         {
             if (MessageBox.Show("Ban co muon thoat chuong trinh", "Canh Bao", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Application.Exit();
+                Application.Exit(); //Kết thúc toàn bộ chương trình
             }
         }
 
-
-
-        private void btuudai_Click(object sender, EventArgs e)
+        private void btUuDai_Click(object sender, EventArgs e)
         {
-
+            
         }
 
 
-
+        //cập nhật danh sách các mục trong giao diện
         private void cbbthucdon_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Khi người dùng thay đổi thực đơn, tải lại các mục theo thực đơn đã chọn
@@ -113,7 +110,6 @@ namespace QuanLySuShi
             ThucDon thucdon = cbbthucdon.SelectedItem as ThucDon;
 
             dataGridView1.DataSource = MonAnDAO.GetMonAn(thucdon.MaThucDon);
-
         }
 
         private void cbbMuc_SelectedIndexChanged(object sender, EventArgs e)
@@ -123,7 +119,6 @@ namespace QuanLySuShi
             Muc muc = cbbmuc.SelectedItem as Muc;
             ThucDon thucdon = cbbthucdon.SelectedItem as ThucDon;
             dataGridView1.DataSource = MonAnDAO.GetMonAn(thucdon.MaThucDon, muc.MaMuc);
-
         }
 
         private void cbbmonan_SelectedIndexChanged(object sender, EventArgs e)
@@ -144,7 +139,6 @@ namespace QuanLySuShi
                 // Tiến hành thao tác với dòng select_row_dtgv
             }
         }
-
 
         private void btThem_Click(object sender, EventArgs e)
         {
@@ -222,7 +216,6 @@ namespace QuanLySuShi
             if (cbbchinhanh.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn chi nhánh!");
-
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtDiaChi.Text))
@@ -235,8 +228,6 @@ namespace QuanLySuShi
                 MessageBox.Show("Vui lòng chọn món ăn!");
                 return;
             }
-
-
             string ghichu = tbghichu.Text; // Lấy giá trị ghi chú từ TextBox
             string maphieumoi = PhieudatmonDAO.GeNextPhieuDatMon();
 
@@ -276,7 +267,6 @@ namespace QuanLySuShi
                 txtDiaChi.Clear();
                 tbghichu.Clear();
                 LoadDonHang();
-
             }
         }
 
@@ -288,10 +278,31 @@ namespace QuanLySuShi
 
         }
 
-        private void btdatban_Click(object sender, EventArgs e)
+        private void btDatBan_Click(object sender, EventArgs e)
         {
+            if (cbbchinhanh.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn chi nhánh!", "Thông báo");
+                return;
+            }
 
+            string maChiNhanh = (cbbchinhanh.SelectedItem as ChiNhanh).MaChiNhanh;
+            int soBan = int.Parse(txtSoBan.Text);
+            DateTime thoiGian = DateTime.Parse(txtThoiGian.Text);
+            string ghiChu = tbGhiChu.Text;
+
+            // Gọi DAO để lưu thông tin đặt bàn
+            bool isSuccess = DatBanDAO.CreateDatBan(maChiNhanh, soBan, thoiGian, ghiChu);
+            if (isSuccess)
+            {
+                MessageBox.Show("Đặt bàn thành công!", "Thông báo");
+            }
+            else
+            {
+                MessageBox.Show("Đặt bàn thất bại, vui lòng thử lại.", "Thông báo");
+            }
         }
+
 
         private void groupBox3_Enter(object sender, EventArgs e)
         {
@@ -341,7 +352,6 @@ namespace QuanLySuShi
 
         private void btuudai_Click_1(object sender, EventArgs e)
         {
-
             TheKhachHang tkh = TheKhachHangDAO.GetTheKhachHang(maKhachHang: (Dangnhap.user.MaDinhDanh));
             if (tkh == null)
             {
@@ -374,7 +384,6 @@ namespace QuanLySuShi
         private void Mainfmkhachhang_FormClosing(object sender, FormClosingEventArgs e)
         {
             Program.dangnhapForm.Show();
-
         }
     }
 }

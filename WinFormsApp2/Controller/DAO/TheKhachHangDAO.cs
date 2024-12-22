@@ -12,7 +12,6 @@ namespace QuanLySuShi.Controller.DAO
         // Thêm thẻ khách hàng mới
         public static bool CreateTheKhachHang(string maThe, string maNhanVien, string maKhachHang)
         {
-
             string query = "EXEC sp_CreateTheKhachHang @MaThe,@MaNhanVien,@MaKhachHang";
             Dictionary<string, object> parameters = new Dictionary<string, object>
         {
@@ -85,11 +84,11 @@ namespace QuanLySuShi.Controller.DAO
 
             // Khởi tạo tham số
             Dictionary<string, object> parameters = new Dictionary<string, object>
-    {
-        { "@MaThe", (object)maThe ?? DBNull.Value },
-        { "@MaKhachHang", (object)maKhachHang ?? DBNull.Value },
-        { "@CCCD", (object)cccd ?? DBNull.Value }
-    };
+            {
+                { "@MaThe", (object)maThe ?? DBNull.Value },
+                { "@MaKhachHang", (object)maKhachHang ?? DBNull.Value },
+                { "@CCCD", (object)cccd ?? DBNull.Value }
+            };
 
             // Thực thi truy vấn
             DataTable result = DataProvider.ExecuteSelectQuery(query, parameters);
@@ -111,8 +110,5 @@ namespace QuanLySuShi.Controller.DAO
             // Không tìm thấy kết quả
             return null;
         }
-
-
-
     }
 }

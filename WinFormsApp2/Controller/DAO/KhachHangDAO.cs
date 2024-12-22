@@ -10,6 +10,7 @@ namespace QuanLySuShi.Controller.DAO
 {
     internal class KhachHangDAO
     {
+        //Lấy khách hàng bằng tài khoảnkhoản
         public static KhachHang GetKhachHangByTaiKhoan(string taiKhoan)
         {
             string query = "SELECT * FROM KhachHang WHERE TaiKhoan = @TaiKhoan";
@@ -29,6 +30,8 @@ namespace QuanLySuShi.Controller.DAO
             }
             return null;
         }
+
+        //Lấy khách hàng 
         public static string GetNextMakhachhang()
         {
             // Câu truy vấn SQL để lấy giá trị lớn nhất của phần số trong mã phiếu
@@ -39,9 +42,13 @@ namespace QuanLySuShi.Controller.DAO
 
             return (string)dataTable.Rows[0][0];
         }
+
+        //Tạo khách hàng
         public static bool CreatKhachHang(KhachHang khachHang)
         {
             string query = "EXEC sp_CreateKhachHang @MaKhachHang,@HoTen,@SoDienThoai,@Email,@CCCD,@GioiTinh,@MatKhau,@TaiKhoan";
+            
+            //Tạo tham số truy vấn
             var parameters = new Dictionary<string, object>
             {
                 { "@MaKhachHang", khachHang.MaDinhDanh },
@@ -57,9 +64,10 @@ namespace QuanLySuShi.Controller.DAO
             // Gọi hàm thực thi câu lệnh SQL
             return DataProvider.ExecuteNonQuery(query, parameters);
         }
+
+        // 
         public static string MaKhachHangByMaPhieu(string Maphieu)
         {
-
             // Câu truy vấn SQL
             string query = "SELECT * FROM KhachHang join PhieuDatMon on KhachHang.MaKhachHang = PhieuDatMon.MaKhachHang AND @MaPhieu =PhieuDatMon.MaPhieu ";
 
@@ -68,17 +76,16 @@ namespace QuanLySuShi.Controller.DAO
             {
                 {"@MaPhieu", Maphieu}
             };
+
             // Thực thi truy vấn
             DataTable result = DataProvider.ExecuteSelectQuery(query, parameters);
-
-
-
             return (string)result.Rows[0]["MaKhachHang"];
         }
         public static KhachHang GetKhachHangByMakhachHang(string makhach)
         {
             string query = "SELECT * FROM KhachHang WHERE Makhachhang = @Makhachhang";
 
+            // Tạo tham số truy vấn
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
                 { "@Makhachhang", makhach },
@@ -91,7 +98,7 @@ namespace QuanLySuShi.Controller.DAO
             {
                 DataRow row = dataTable.Rows[0];
                 return KhachHang.FromDataRow(row);  // Sử dụng phương thức FromDataRow để tạo đối tượng từ DataRow
-            }
+            } 
             return null;
         }
     }
