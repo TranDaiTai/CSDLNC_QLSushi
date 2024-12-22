@@ -280,27 +280,27 @@ namespace QuanLySuShi
 
         private void btDatBan_Click(object sender, EventArgs e)
         {
-            if (cbbchinhanh.SelectedIndex == -1)
-            {
-                MessageBox.Show("Vui lòng chọn chi nhánh!", "Thông báo");
-                return;
-            }
+            // if (cbbchinhanh.SelectedIndex == -1)
+            // {
+            //     MessageBox.Show("Vui lòng chọn chi nhánh!", "Thông báo");
+            //     return;
+            // }
 
-            string maChiNhanh = (cbbchinhanh.SelectedItem as ChiNhanh).MaChiNhanh;
-            int soBan = int.Parse(txtSoBan.Text);
-            DateTime thoiGian = DateTime.Parse(txtThoiGian.Text);
-            string ghiChu = tbGhiChu.Text;
+            // string maChiNhanh = (cbbchinhanh.SelectedItem as ChiNhanh).MaChiNhanh;
+            // int soBan = int.Parse(txtSoBan.Text);
+            // DateTime thoiGian = DateTime.Parse(txtThoiGian.Text);
+            // string ghiChu = tbGhiChu.Text;
 
-            // Gọi DAO để lưu thông tin đặt bàn
-            bool isSuccess = DatBanDAO.CreateDatBan(maChiNhanh, soBan, thoiGian, ghiChu);
-            if (isSuccess)
-            {
-                MessageBox.Show("Đặt bàn thành công!", "Thông báo");
-            }
-            else
-            {
-                MessageBox.Show("Đặt bàn thất bại, vui lòng thử lại.", "Thông báo");
-            }
+            // // Gọi DAO để lưu thông tin đặt bàn
+            // bool isSuccess = DatBanDAO.CreateDatBan(maChiNhanh, soBan, thoiGian, ghiChu);
+            // if (isSuccess)
+            // {
+            //     MessageBox.Show("Đặt bàn thành công!", "Thông báo");
+            // }
+            // else
+            // {
+            //     MessageBox.Show("Đặt bàn thất bại, vui lòng thử lại.", "Thông báo");
+            // }
         }
 
 

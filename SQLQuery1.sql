@@ -228,7 +228,6 @@ BEGIN
     SELECT 'Phieu Dat Mon Created Successfully' AS Status;
 END;
 GO
-
 --------------12
 CREATE PROCEDURE dbo.sp_AddHoaDon
     @MaHoaDon CHAR(10),
