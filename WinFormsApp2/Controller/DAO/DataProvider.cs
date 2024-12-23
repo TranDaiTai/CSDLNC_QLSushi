@@ -43,7 +43,6 @@ namespace QuanLySuShi.Controller.DAO
         public static DataTable ExecuteSelectQuery(string query, Dictionary<string, object> parameters = null)
         {
             DataTable dataTable = new DataTable();
-
             try
             {
                 OpenConnection();
@@ -58,7 +57,6 @@ namespace QuanLySuShi.Controller.DAO
                         command.Parameters.AddWithValue(param.Key, param.Value);
                     }
                 }
-
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 adapter.Fill(dataTable);
             }

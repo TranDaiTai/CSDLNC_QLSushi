@@ -291,13 +291,40 @@ namespace QuanLySuShi
 
         private void Mainfmkhachhang_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void btTimkiem_Click(object sender, EventArgs e)
         {
+            // Lấy từ khóa từ TextBox
+            string keyword = tbTimkiem.Text.Trim();
 
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm!", "Thông Báo");
+                return;
+            }
+
+            // Gọi phương thức tìm kiếm
+            List<Chitietphieudat> result = ChitietphieuDAO.searchChiTietPhieuDatMon(keyword);
+
+            if (result != null && result.Count > 0)
+            {
+                // Hiển thị kết quả lên ListView
+                listView1.Items.Clear();
+
+                foreach (var chiTiet in result)
+                {
+                    ListViewItem item = new ListViewItem(chiTiet.MaMonAn);
+                    item.SubItems.Add(chiTiet.MaPhieu);
+                    item.SubItems.Add(chiTiet.SoLuong.ToString());
+                    item.SubItems.Add(chiTiet.Gia.ToString("C")); // Format tiền tệ
+
+                    listView1.Items.Add(item);
+                }
+            }
         }
+
 
         private void dataGridView2_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {

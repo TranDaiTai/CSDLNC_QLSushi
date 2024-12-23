@@ -32,6 +32,7 @@
             hệThốngToolStripMenuItem = new ToolStripMenuItem();
             đăngXuấtToolStripMenuItem = new ToolStripMenuItem();
             thoátToolStripMenuItem = new ToolStripMenuItem();
+            hệThốngToolStripMenuItem1 = new ToolStripMenuItem();
             trợGiúpToolStripMenuItem = new ToolStripMenuItem();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
@@ -39,8 +40,7 @@
             btdanhgia = new Button();
             groupBox4 = new GroupBox();
             btTimkiem = new Button();
-            label1 = new Label();
-            tbtinhtrang = new ComboBox();
+            tbTimkiem = new TextBox();
             bthuydon = new Button();
             groupBox5 = new GroupBox();
             listView1 = new ListView();
@@ -93,7 +93,6 @@
             tbsdt_ql = new TextBox();
             label13 = new Label();
             tbhovaten_ql = new TextBox();
-            hệThốngToolStripMenuItem1 = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -133,16 +132,22 @@
             // đăngXuấtToolStripMenuItem
             // 
             đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            đăngXuấtToolStripMenuItem.Size = new Size(224, 26);
+            đăngXuấtToolStripMenuItem.Size = new Size(160, 26);
             đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             đăngXuấtToolStripMenuItem.Click += đăngXuấtToolStripMenuItem_Click;
             // 
             // thoátToolStripMenuItem
             // 
             thoátToolStripMenuItem.Name = "thoátToolStripMenuItem";
-            thoátToolStripMenuItem.Size = new Size(224, 26);
+            thoátToolStripMenuItem.Size = new Size(160, 26);
             thoátToolStripMenuItem.Text = "Thoát";
             thoátToolStripMenuItem.Click += thoátToolStripMenuItem_Click;
+            // 
+            // hệThốngToolStripMenuItem1
+            // 
+            hệThốngToolStripMenuItem1.Name = "hệThốngToolStripMenuItem1";
+            hệThốngToolStripMenuItem1.Size = new Size(160, 26);
+            hệThốngToolStripMenuItem1.Text = "Hệ Thống";
             // 
             // trợGiúpToolStripMenuItem
             // 
@@ -200,17 +205,16 @@
             // groupBox4
             // 
             groupBox4.Controls.Add(btTimkiem);
-            groupBox4.Controls.Add(label1);
-            groupBox4.Controls.Add(tbtinhtrang);
-            groupBox4.Location = new Point(6, -14);
+            groupBox4.Controls.Add(tbTimkiem);
+            groupBox4.Location = new Point(6, 0);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(468, 75);
+            groupBox4.Size = new Size(468, 61);
             groupBox4.TabIndex = 43;
             groupBox4.TabStop = false;
             // 
             // btTimkiem
             // 
-            btTimkiem.Location = new Point(282, 17);
+            btTimkiem.Location = new Point(268, 15);
             btTimkiem.Name = "btTimkiem";
             btTimkiem.Size = new Size(94, 29);
             btTimkiem.TabIndex = 2;
@@ -218,22 +222,13 @@
             btTimkiem.UseVisualStyleBackColor = true;
             btTimkiem.Click += btTimkiem_Click;
             // 
-            // label1
+            // tbTimkiem
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(3, 23);
-            label1.Name = "label1";
-            label1.Size = new Size(76, 20);
-            label1.TabIndex = 1;
-            label1.Text = "Tình trạng";
-            // 
-            // tbtinhtrang
-            // 
-            tbtinhtrang.FormattingEnabled = true;
-            tbtinhtrang.Location = new Point(85, 18);
-            tbtinhtrang.Name = "tbtinhtrang";
-            tbtinhtrang.Size = new Size(167, 28);
-            tbtinhtrang.TabIndex = 0;
+            tbTimkiem.Location = new Point(6, 17);
+            tbTimkiem.Name = "tbTimkiem";
+            tbTimkiem.PlaceholderText = "Nhập từ khóa tìm kiếm...";
+            tbTimkiem.Size = new Size(256, 27);
+            tbTimkiem.TabIndex = 3;
             // 
             // bthuydon
             // 
@@ -325,11 +320,11 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Địa Chỉ";
             // 
-            // tbDiaChi
+            // txtDiaChi
             // 
             txtDiaChi.Location = new Point(0, 26);
             txtDiaChi.Multiline = true;
-            txtDiaChi.Name = "tbDiaChi";
+            txtDiaChi.Name = "txtDiaChi";
             txtDiaChi.Size = new Size(332, 32);
             txtDiaChi.TabIndex = 0;
             // 
@@ -741,12 +736,6 @@
             tbhovaten_ql.Size = new Size(176, 27);
             tbhovaten_ql.TabIndex = 0;
             // 
-            // hệThốngToolStripMenuItem1
-            // 
-            hệThốngToolStripMenuItem1.Name = "hệThốngToolStripMenuItem1";
-            hệThốngToolStripMenuItem1.Size = new Size(224, 26);
-            hệThốngToolStripMenuItem1.Text = "Hệ Thống";
-            // 
             // Mainfmkhachhang
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -819,8 +808,6 @@
         private Button btdanhgia;
         private GroupBox groupBox4;
         private Button btTimkiem;
-        private Label label1;
-        private ComboBox tbtinhtrang;
         private Button bthuydon;
         private GroupBox groupBox5;
         private ListView listView1;
@@ -855,5 +842,6 @@
         private Label label13;
         private TextBox tbhovaten_ql;
         private ToolStripMenuItem hệThốngToolStripMenuItem1;
+        private TextBox tbTimkiem;
     }
 }

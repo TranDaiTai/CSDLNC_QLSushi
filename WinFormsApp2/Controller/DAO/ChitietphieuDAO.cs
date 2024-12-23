@@ -71,6 +71,44 @@ namespace QuanLySuShi.Controller.DAO
             return list;
         }
 
+        public static List<Chitietphieudat> searchChiTietPhieuDatMon(string keyword)
+        {
+            List<Chitietphieudat> list = new List<Chitietphieudat>();
 
+            string query = @"
+            SELECT ctpdm.MaMonAn, ctpdm.MaPhieu, ctpdm.SoLuong, ctpdm.Gia
+            FROM ChiTietPhieuDat ctpdm
+            WHERE ctpdm.MaMonAn LIKE @keyword 
+            OR ctpdm.MaPhieu LIKE @keyword";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@keyword", "%" + keyword + "%" }
+            };
+
+            DataTable data = DataProvider.ExecuteSelectQuery(query, parameters);
+
+            if (data != null && data.Rows.Count > 0)
+            {
+                foreach (DataRow row in data.Rows)
+                {
+                    Chitietphieudat chiTiet = new Chitietphieudat
+                    {
+                        MaMonAn = row["MaMonAn"].ToString(),
+                        MaPhieu = row["MaPhieu"].ToString(),
+                        SoLuong = Convert.ToInt32(row["SoLuong"]),
+                        Gia = Convert.ToDecimal(row["Gia"])
+                    };
+
+                    list.Add(chiTiet);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Không tìm thấy chi tiết phiếu đặt món phù hợp!", "Thông Báo");
+            }
+
+            return list;
+        }
     }
 }
