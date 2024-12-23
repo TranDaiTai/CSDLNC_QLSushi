@@ -280,27 +280,7 @@ namespace QuanLySuShi
 
         private void btDatBan_Click(object sender, EventArgs e)
         {
-            // if (cbbchinhanh.SelectedIndex == -1)
-            // {
-            //     MessageBox.Show("Vui lòng chọn chi nhánh!", "Thông báo");
-            //     return;
-            // }
-
-            // string maChiNhanh = (cbbchinhanh.SelectedItem as ChiNhanh).MaChiNhanh;
-            // int soBan = int.Parse(txtSoBan.Text);
-            // DateTime thoiGian = DateTime.Parse(txtThoiGian.Text);
-            // string ghiChu = tbGhiChu.Text;
-
-            // // Gọi DAO để lưu thông tin đặt bàn
-            // bool isSuccess = DatBanDAO.CreateDatBan(maChiNhanh, soBan, thoiGian, ghiChu);
-            // if (isSuccess)
-            // {
-            //     MessageBox.Show("Đặt bàn thành công!", "Thông báo");
-            // }
-            // else
-            // {
-            //     MessageBox.Show("Đặt bàn thất bại, vui lòng thử lại.", "Thông báo");
-            // }
+            
         }
 
 
@@ -352,7 +332,7 @@ namespace QuanLySuShi
 
         private void btuudai_Click_1(object sender, EventArgs e)
         {
-            TheKhachHang tkh = TheKhachHangDAO.GetTheKhachHang(maKhachHang: (Dangnhap.user.MaDinhDanh));
+            TheKhachHang tkh = TheKhachHangDAO.GetTheKhachHang(maKhachHang: Dangnhap.user.MaDinhDanh);
             if (tkh == null)
             {
                 MessageBox.Show("Tài khoản chưa đăng ký thẻ khách hàng", "Thông Báo");
@@ -361,12 +341,25 @@ namespace QuanLySuShi
 
             List<UuDai> lsUuDai = UuDaiDAO.GetUuDais(loaiTheApDung: tkh.LoaiThe);
 
+            // Kiểm tra nếu không có ưu đãi nào
+            if (lsUuDai == null || lsUuDai.Count == 0)
+            {
+                MessageBox.Show("Không có ưu đãi áp dụng cho loại thẻ của bạn", "Thông Báo");
+                return;
+            }
+
             // Mở form phụ để hiển thị danh sách ưu đãi
             fmUuDais frm = new fmUuDais(lsUuDai);
             frm.ShowDialog();
+
+            // Kiểm tra nếu người dùng chọn một ưu đãi
             if (frm.uuDai != null)
             {
                 mauudai = frm.uuDai.Cells["MaUuDai"].Value?.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Bạn chưa chọn ưu đãi nào.", "Thông Báo");
             }
 
         }
@@ -378,7 +371,7 @@ namespace QuanLySuShi
 
         private void btdanhgia_Click(object sender, EventArgs e)
         {
-
+             
         }
 
         private void Mainfmkhachhang_FormClosing(object sender, FormClosingEventArgs e)
