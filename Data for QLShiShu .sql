@@ -145,6 +145,13 @@ VALUES
    
 go
 
+-- thêm dữ liệu hóa đơn
+INSERT INTO HoaDon (MaHoaDon, NgayLap, TongTien, SoTienGiamGia, MaUuDai, MaPhieu, MaChiNhanh)
+VALUES 
+('HD01', '2024-12-15', 170000, 50000, 'UD01', 'PD01', 'CN01'),
+('HD02', '2024-12-15', 90000, 20000, 'UD02', 'PD02', 'CN02');
+Go
+
 -- Thêm dữ liệu vào bảng PhieuDatMonTrucTuyen
 INSERT INTO PhieuDatMonTrucTuyen (MaPhieu, ThoiDiemTruyCap, ThoiGianTruyCap, GhiChu, LoaiDichVu)
 VALUES

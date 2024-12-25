@@ -590,6 +590,8 @@ BEGIN
 END
 GO
 
+
+--Tạo mới mã thực đơn
 CREATE PROCEDURE sp_GenerateNewMaThucDon
     @NewMaThucDon varchar(10) OUTPUT
 AS
@@ -624,3 +626,5 @@ BEGIN
     END CATCH
 END
 go
+
+-- thêm mới nhân viên
