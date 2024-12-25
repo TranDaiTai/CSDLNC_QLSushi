@@ -15,11 +15,11 @@ namespace QuanLySuShi.Controller.DAO
 
             // Tạo dictionary chứa các tham số
             Dictionary<string, object> parameters = new Dictionary<string, object>
-    {
-        { "@id_phieu", MaPhieu },
-        { "@id_mon_an", MaMonAn },
-        { "@so_luong", SoLuong }
-    };
+            {
+                { "@id_phieu", MaPhieu },
+                { "@id_mon_an", MaMonAn },
+                { "@so_luong", SoLuong }
+            };
 
             // Gọi stored procedure và trả về kết quả
             return DataProvider.ExecuteNonQuery(storedProcedure, parameters);
@@ -76,7 +76,7 @@ namespace QuanLySuShi.Controller.DAO
             List<Chitietphieudat> list = new List<Chitietphieudat>();
 
             string query = @"
-            SELECT ctpdm.MaMonAn, ctpdm.MaPhieu, ctpdm.SoLuong, ctpdm.Gia
+            SELECT ctpdm.MaPhieu, ctpdm.MaMonAn, ctpdm.Gia, ctpdm.SoLuong
             FROM ChiTietPhieuDat ctpdm
             WHERE ctpdm.MaMonAn LIKE @keyword 
             OR ctpdm.MaPhieu LIKE @keyword";
@@ -92,14 +92,7 @@ namespace QuanLySuShi.Controller.DAO
             {
                 foreach (DataRow row in data.Rows)
                 {
-                    Chitietphieudat chiTiet = new Chitietphieudat
-                    {
-                        MaMonAn = row["MaMonAn"].ToString(),
-                        MaPhieu = row["MaPhieu"].ToString(),
-                        SoLuong = Convert.ToInt32(row["SoLuong"]),
-                        Gia = Convert.ToDecimal(row["Gia"])
-                    };
-
+                    Chitietphieudat chiTiet = new Chitietphieudat(row);
                     list.Add(chiTiet);
                 }
             }
@@ -110,5 +103,53 @@ namespace QuanLySuShi.Controller.DAO
 
             return list;
         }
+
+        public static Chitietphieudat Get1ChitietPhieuByMaPhieu(string maPhieu)
+        {
+            if (string.IsNullOrEmpty(maPhieu))
+            {
+                throw new ArgumentException("maPhieu cannot be null or empty");
+            }
+
+            Chitietphieudat ct = new Chitietphieudat();
+            string query = "SELECT * FROM Chitietphieudat WHERE MaPhieu = @MaPhieu";
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "@MaPhieu", maPhieu }
+            };
+
+            DataTable data = DataProvider.ExecuteSelectQuery(query, parameters);
+
+            if (data != null)
+            {
+                foreach (DataRow datarow in data.Rows)
+                {
+                    Chitietphieudat ctpd = new Chitietphieudat(datarow);
+                    ct = ctpd;
+                }
+            }
+
+            return ct;
+        }
+
+        public static decimal GetTongSoTienByMaPhieu(string maPhieu)
+        {
+            string query = "SELECT SUM(SoLuong * Gia) AS TongSoTien FROM ChiTietPhieuDat WHERE MaPhieu = @MaPhieu";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@MaPhieu", maPhieu }
+            };
+
+            DataTable data = DataProvider.ExecuteSelectQuery(query, parameters);
+
+            if (data.Rows.Count > 0 && data.Rows[0]["TongSoTien"] != DBNull.Value)
+            {
+                return Convert.ToDecimal(data.Rows[0]["TongSoTien"]);
+            }
+
+            return 0; // Trả về 0 nếu không có dữ liệu
+        }
+
     }
 }

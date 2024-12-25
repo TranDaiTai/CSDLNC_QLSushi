@@ -41,9 +41,10 @@ namespace QuanLySuShi
             listView1.Columns.Add("Mã phiếu", 100);
             listView1.Columns.Add("Mã món ăn", 100);
             listView1.Columns.Add("Tên món ăn", 100);
-
             listView1.Columns.Add("Giá", 100);
             listView1.Columns.Add("Số lượng", 100);
+
+
 
             LoadDonHang();
             LoadThongtinThe();
@@ -94,11 +95,6 @@ namespace QuanLySuShi
             {
                 Application.Exit(); //Kết thúc toàn bộ chương trình
             }
-        }
-
-        private void btUuDai_Click(object sender, EventArgs e)
-        {
-            
         }
 
 
@@ -213,22 +209,29 @@ namespace QuanLySuShi
         private void btdathang_Click(object sender, EventArgs e)
         {
             string loaiphieudat = "Trực Tuyến";
+
+            // Kiểm tra chi nhánh được chọn
             if (cbbchinhanh.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn chi nhánh!");
                 return;
             }
+
+            // Kiểm tra địa chỉ nhập vào
             if (string.IsNullOrWhiteSpace(txtDiaChi.Text))
             {
                 MessageBox.Show("Vui lòng nhập địa chỉ!");
                 return;
             }
+
+            // Kiểm tra danh sách món ăn
             if (listView2.Items.Count == 0)
             {
                 MessageBox.Show("Vui lòng chọn món ăn!");
                 return;
             }
-            string ghichu = tbghichu.Text; // Lấy giá trị ghi chú từ TextBox
+
+            // Lấy mã phiếu mới
             string maphieumoi = PhieudatmonDAO.GeNextPhieuDatMon();
 
             // Tạo phiếu đặt món
@@ -244,31 +247,52 @@ namespace QuanLySuShi
                     // Duyệt qua các món ăn trong ListView để thêm chi tiết vào phiếu
                     foreach (ListViewItem item in listView2.Items)
                     {
-                        // Lấy mã món ăn từ item
                         string maMonAn = item.SubItems[0].Text;
-
-                        // Lấy số lượng từ item
-                        int soLuong = int.Parse(item.SubItems[3].Text); // Chú ý đến chỉ mục đúng
-
-                        // Tạo chi tiết phiếu đặt món
-
-                        // Thêm chi tiết phiếu vào cơ sở dữ liệu
-                        // (Ví dụ: gọi phương thức để lưu chi tiết vào cơ sở dữ liệu)
-                        bool isDetailAdded = ChitietphieuDAO.AddChitietPhieu(maphieumoi, maMonAn, soLuong);
-
-                        // Bạn có thể kiểm tra việc thêm chi tiết thành công ở đây nếu cần
+                        int soLuong = int.Parse(item.SubItems[3].Text);
+                        ChitietphieuDAO.AddChitietPhieu(maphieumoi, maMonAn, soLuong);
                     }
                 }
-                CultureInfo culture = new CultureInfo("vi-VN");
-                string mahoadon = HoaDonDAO.GetNextHoaDon();
-                HoaDonDAO.AddHoaDon(mahoadon, (cbbchinhanh.SelectedItem as ChiNhanh).MaChiNhanh, maphieumoi, UuDaiDAO.GetUuDais(maUuDai: mauudai)[0]);
 
+                // Tính tổng số tiền
+                decimal tongSoTien = ChitietphieuDAO.GetTongSoTienByMaPhieu(maphieumoi);
+
+                // Lấy thông tin ưu đãi
+                string maUuDai = mauudai; // Biến này cần được gán trước
+
+                if (string.IsNullOrWhiteSpace(maUuDai))
+                {
+                    MessageBox.Show("Quý khách đang không áp dụng ưu đãi nào.", "Thông báo");
+                    maUuDai = ""; // Hoặc bỏ qua ưu đãi
+                }
+
+                UuDai uuDai = UuDaiDAO.GetUuDaiByMaUuDai(maUuDai);
+
+                // Tạo hóa đơn
+                string mahoadon = HoaDonDAO.GetNextHoaDon();
+                bool isHoaDonAdded = HoaDonDAO.AddHoaDon(mahoadon, (cbbchinhanh.SelectedItem as ChiNhanh).MaChiNhanh, maphieumoi, uuDai, tongSoTien);
+
+                if (isHoaDonAdded)
+                {
+                    MessageBox.Show($"Hóa đơn đã được thêm thành công! Giảm giá: {uuDai?.GiamGia ?? 0:C}, Tổng số tiền: {tongSoTien:C}", "Thông báo");
+                }
+                else
+                {
+                    MessageBox.Show("Không thể thêm hóa đơn. Vui lòng thử lại!", "Thông báo");
+                }
+
+                // Reset các trường sau khi thành công
                 listView2.Items.Clear();
                 txtDiaChi.Clear();
                 tbghichu.Clear();
                 LoadDonHang();
             }
+            else
+            {
+                MessageBox.Show("Không thể tạo phiếu đặt món. Vui lòng thử lại!", "Thông báo");
+            }
         }
+
+
 
         private void cbbchinhanh_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -280,7 +304,7 @@ namespace QuanLySuShi
 
         private void btDatBan_Click(object sender, EventArgs e)
         {
-            
+
         }
 
 
@@ -291,7 +315,7 @@ namespace QuanLySuShi
 
         private void Mainfmkhachhang_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btTimkiem_Click(object sender, EventArgs e)
@@ -315,11 +339,12 @@ namespace QuanLySuShi
 
                 foreach (var chiTiet in result)
                 {
-                    ListViewItem item = new ListViewItem(chiTiet.MaMonAn);
-                    item.SubItems.Add(chiTiet.MaPhieu);
+                    ListViewItem item = new ListViewItem(chiTiet.MaPhieu);
+                    item.SubItems.Add(chiTiet.MaMonAn);
+                    MonAn monAn = MonAnDAO.GetMonAn(maMonAn: chiTiet.MaMonAn)[0];
+                    item.SubItems.Add(monAn.TenMonAn);
+                    item.SubItems.Add(chiTiet.Gia.ToString());
                     item.SubItems.Add(chiTiet.SoLuong.ToString());
-                    item.SubItems.Add(chiTiet.Gia.ToString("C")); // Format tiền tệ
-
                     listView1.Items.Add(item);
                 }
             }
@@ -393,17 +418,119 @@ namespace QuanLySuShi
 
         private void btdatban_Click_1(object sender, EventArgs e)
         {
+            // Kiểm tra chi nhánh được chọn
+            if (cbbchinhanh.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn chi nhánh!", "Thông báo");
+                return;
+            }
 
+            // Lấy giá trị từ giao diện
+            KhachHang kh = KhachHangDAO.GetKhachHangByMakhachHang(makhach: Dangnhap.user.MaDinhDanh);
+
+
+            int soLuongKhach;
+
+            // Kiểm tra mã khách hàng
+            if (string.IsNullOrWhiteSpace(kh.MaDinhDanh))
+            {
+                MessageBox.Show("Vui lòng nhập mã khách hàng!", "Thông báo");
+                return;
+            }
+
+            soLuongKhach = Convert.ToInt32(numericUpDown1.Value);
+            
+
+            // Lấy mã phiếu mới
+            string maPhieu = PhieudatmonDAO.GeNextPhieuDatMon();
+            
+            // Tạo phiếu đặt món
+            bool isPhieuCreated = PhieudatmonDAO.CreatePhieuDatMon(
+                null,
+                kh.MaDinhDanh,
+                (cbbchinhanh.SelectedItem as ChiNhanh).MaChiNhanh,
+                maPhieu,
+                "Trực tuyến"
+            );
+
+            if (!isPhieuCreated)
+            {
+                MessageBox.Show("Không thể tạo phiếu đặt món. Vui lòng thử lại!", "Thông báo");
+                return;
+            }
+            string maBan = PhieuDatMonTaiQuanDAO.GetNextMaBan();
+
+            // Tạo phiếu đặt món trực tuyến
+            bool isTrucTuyenCreated = PhieudatmonTrucTuyenDAO.CreatePhieuDatMonTrucTuyen(
+                maPhieu: maPhieu,
+                thoiDiemTruyCap: DateTime.Now,
+                thoiGianTruyCap: null, // Không bắt buộc
+                ghiChu: groupBox6.Text.Trim(),
+                loaiDichVu: "Tại quán"
+            );
+            if (!isTrucTuyenCreated)
+            {
+                MessageBox.Show("Không thể tạo phiếu đặt món trực tuyến. Vui lòng thử lại!", "Thông báo");
+                return;
+            }
+
+            // Tạo phiếu đặt món tại quán
+            bool isTaiQuanCreated = PhieuDatMonTaiQuanDAO.CreatePhieuDatMonTaiQuan(
+                maPhieu: maPhieu,
+                soLuongKhach: soLuongKhach,
+                maBan,
+                ngayDat: DateTime.Now // Hoặc ngày được chọn
+            );
+
+            if (isTaiQuanCreated)
+            {
+                MessageBox.Show("Đặt bàn thành công!", "Thông báo");
+                // Reset giao diện
+                listView2.Items.Clear();
+                txtDiaChi.Clear();
+                tbghichu.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Không thể tạo phiếu đặt bàn tại quán. Vui lòng thử lại!", "Thông báo");
+            }
         }
+
 
         private void btdanhgia_Click(object sender, EventArgs e)
         {
-             
+
         }
 
         private void Mainfmkhachhang_FormClosing(object sender, FormClosingEventArgs e)
         {
             Program.dangnhapForm.Show();
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbTimkiem_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bthuydon_Click(object sender, EventArgs e) //HỦy đơn
+        {
+
+        }
+
+        private void btThaydoi_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

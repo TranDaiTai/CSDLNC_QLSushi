@@ -47,6 +47,7 @@
             groupBox6 = new GroupBox();
             listView3 = new ListView();
             tabPage2 = new TabPage();
+            comboBox1 = new ComboBox();
             dataGridView1 = new DataGridView();
             groupBox3 = new GroupBox();
             txtDiaChi = new TextBox();
@@ -229,6 +230,7 @@
             tbTimkiem.PlaceholderText = "Nhập từ khóa tìm kiếm...";
             tbTimkiem.Size = new Size(256, 27);
             tbTimkiem.TabIndex = 3;
+            tbTimkiem.TextChanged += tbTimkiem_TextChanged;
             // 
             // bthuydon
             // 
@@ -239,6 +241,7 @@
             bthuydon.TabIndex = 40;
             bthuydon.Text = "Huỷ Đơn";
             bthuydon.UseVisualStyleBackColor = true;
+            bthuydon.Click += bthuydon_Click;
             // 
             // groupBox5
             // 
@@ -257,6 +260,7 @@
             listView1.Size = new Size(300, 170);
             listView1.TabIndex = 23;
             listView1.UseCompatibleStateImageBehavior = false;
+            listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
             // 
             // groupBox6
             // 
@@ -278,6 +282,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(comboBox1);
             tabPage2.Controls.Add(dataGridView1);
             tabPage2.Controls.Add(groupBox3);
             tabPage2.Controls.Add(groupBox1);
@@ -299,6 +304,16 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Đặt Hàng";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(269, 40);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(84, 28);
+            comboBox1.TabIndex = 43;
+            comboBox1.Text = "HÌnh thức";
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // dataGridView1
             // 
@@ -408,7 +423,7 @@
             // 
             // btXoa
             // 
-            btXoa.Location = new Point(269, 40);
+            btXoa.Location = new Point(358, 39);
             btXoa.Name = "btXoa";
             btXoa.Size = new Size(87, 28);
             btXoa.TabIndex = 35;
@@ -418,15 +433,16 @@
             // 
             // numericUpDown1
             // 
-            numericUpDown1.Location = new Point(362, 18);
+            numericUpDown1.Location = new Point(269, 6);
             numericUpDown1.Name = "numericUpDown1";
             numericUpDown1.Size = new Size(58, 27);
             numericUpDown1.TabIndex = 34;
             numericUpDown1.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            
             // 
             // btThem
             // 
-            btThem.Location = new Point(269, 10);
+            btThem.Location = new Point(358, 7);
             btThem.Name = "btThem";
             btThem.Size = new Size(87, 28);
             btThem.TabIndex = 32;
@@ -543,6 +559,7 @@
             button1.TabIndex = 12;
             button1.Text = "Thay đổi ";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += btThaydoi_Click;
             // 
             // groupBox8
             // 
@@ -843,5 +860,6 @@
         private TextBox tbhovaten_ql;
         private ToolStripMenuItem hệThốngToolStripMenuItem1;
         private TextBox tbTimkiem;
+        private ComboBox comboBox1;
     }
 }

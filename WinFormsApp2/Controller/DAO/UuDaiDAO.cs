@@ -61,6 +61,42 @@ namespace QuanLySuShi.Controller.DAO
             return result; // Trả về danh sách ưu đãi
         }
 
+        public static UuDai GetUuDaiByMaUuDai(string maUuDai)
+        {
+            if (string.IsNullOrWhiteSpace(maUuDai))
+            {
+                return null; // Không áp dụng ưu đãi
+            }
+
+            string query = "SELECT MaUuDai, GiamGia, ChuongTrinh, TangSanPham, UuDaiChietKhau, LoaiTheApDung, NgayBatDau, NgayKetThuc " +
+                           "FROM UuDai WHERE MaUuDai = @MaUuDai";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@MaUuDai", maUuDai }
+            };
+
+            DataTable data = DataProvider.ExecuteSelectQuery(query, parameters);
+
+            if (data.Rows.Count > 0)
+            {
+                DataRow row = data.Rows[0];
+                return new UuDai
+                {
+                    MaUuDai = row["MaUuDai"].ToString(),
+                    GiamGia = row["GiamGia"] == DBNull.Value ? null : (decimal?)row["GiamGia"],
+                    ChuongTrinh = row["ChuongTrinh"].ToString(),
+                    TangSanPham = row["TangSanPham"].ToString(),
+                    //UuDaiChietKhau = row["UuDaiChietKhau"] == DBNull.Value ? null : (float?)row["UuDaiChietKhau"],
+                    UuDaiChietKhau = row["UuDaiChietKhau"] == DBNull.Value ? null : (float?)(double?)row["UuDaiChietKhau"],
+                    LoaiTheApDung = row["LoaiTheApDung"].ToString(),
+                    NgayBatDau = (DateTime)row["NgayBatDau"],
+                    NgayKetThuc = (DateTime)row["NgayKetThuc"]
+                };
+            }
+
+            return null;
+        }
 
 
 

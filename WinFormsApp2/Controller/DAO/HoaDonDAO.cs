@@ -12,22 +12,51 @@ namespace QuanLySuShi.Controller.DAO
     public class HoaDonDAO
     {
         // Thêm hóa đơn mới vào cơ sở dữ liệu
-        public static bool AddHoaDon(string mahoadon, string machinhanh, string maphieu, UuDai uuDai)
+        //public static bool AddHoaDon(string mahoadon, string machinhanh, string maphieu, UuDai uuDai, Chitietphieudat ctiet)
+        //{
+        //    string query = "EXEC dbo.sp_AddHoaDon @MaHoaDon, @TongSoTien, @SoTienGiamGia, @MaUuDai, @MaPhieu, @MaChiNhanh";
+
+        //    var parameters = new Dictionary<string, object>
+        //    {
+        //        { "@MaHoaDon", mahoadon },
+        //        { "@SoTienGiamGia", uuDai?.GiamGia ?? (object)DBNull.Value },  // Kiểm tra uuDai có null không
+        //        { "@MaUuDai", uuDai?.MaUuDai ?? (object)DBNull.Value },  // Kiểm tra uuDai có null không
+        //        { "@MaPhieu", maphieu },
+        //        { "@MaChiNhanh", machinhanh }
+        //        { "@TTongSoTien", ctiet?.Gia ?? (object)DBNull.Value },  // Kiểm tra uuDai có null không
+        //    };
+
+        //    // Thực thi truy vấn và trả về kết quả
+        //    return DataProvider.ExecuteNonQuery(query, parameters);
+        //}
+
+        public static bool AddHoaDon(string mahoadon, string machinhanh, string maphieu, UuDai uuDai, decimal tongSoTien)
         {
-            string query = "EXEC dbo.sp_AddHoaDon @MaHoaDon, @SoTienGiamGia, @MaUuDai, @MaPhieu, @MaChiNhanh";
+            string query = "EXEC dbo.sp_AddHoaDon @MaHoaDon, @TongSoTien, @SoTienGiamGia, @MaUuDai, @MaPhieu, @MaChiNhanh";
+
+            decimal soTienGiamGia = uuDai?.GiamGia ?? 0;
+
+            if (soTienGiamGia > tongSoTien)
+            {
+                MessageBox.Show($"Giảm giá ({soTienGiamGia:C}) vượt quá tổng tiền ({tongSoTien:C}). Sẽ đặt giảm giá về 0.", "Thông báo");
+                soTienGiamGia = 0; // Đặt giảm giá về 0
+            }
 
             var parameters = new Dictionary<string, object>
             {
                 { "@MaHoaDon", mahoadon },
-                { "@SoTienGiamGia", uuDai?.GiamGia ?? (object)DBNull.Value },  // Kiểm tra uuDai có null không
-                { "@MaUuDai", uuDai?.MaUuDai ?? (object)DBNull.Value },  // Kiểm tra uuDai có null không
+                { "@TongSoTien", tongSoTien },
+                { "@SoTienGiamGia", soTienGiamGia },
+                { "@MaUuDai", uuDai?.MaUuDai ?? (object)DBNull.Value },
                 { "@MaPhieu", maphieu },
                 { "@MaChiNhanh", machinhanh }
             };
 
-            // Thực thi truy vấn và trả về kết quả
             return DataProvider.ExecuteNonQuery(query, parameters);
         }
+
+
+
         public static HoaDon GetHoaDon(string? MaPhieu = null, string? maHoaDon = null)
         {
             string query = "SELECT * FROM HoaDon WHERE (@MaPhieu is null or  MaPhieu = @MaPhieu) and (@MaHoaDon is null or MaHoaDon = @MaHoaDon)";
