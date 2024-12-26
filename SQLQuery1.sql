@@ -1,3 +1,7 @@
+USE QLShiShu
+   
+GO
+
 ----------1
 CREATE PROCEDURE sp_XoaMonAnTheoMaPhieu
     @MaMonAn CHAR(10),  -- tham số mã món ăn
@@ -417,7 +421,8 @@ BEGIN
 END;
 go
 ------------------------18
-create PROCEDURE sp_CreateTheKhachHang
+-- Tạo sp_CreateTheKhachHang
+CREATE PROCEDURE sp_CreateTheKhachHang
     @MaThe CHAR(10),
     @MaNhanVien CHAR(10),
     @MaKhachHang CHAR(10)
@@ -444,10 +449,11 @@ BEGIN
     -- Thêm mới thẻ khách hàng
     INSERT INTO TheKhachHang (MaThe, LoaiThe, DiemTichLuy, NgayLap, MaNhanVienLapThe, MaKhachHang)
     VALUES (@MaThe, @LoaiThe, @DiemTichLuy, @NgayLap, @MaNhanVien, @MaKhachHang);
-   
 END;
+GO
+
 ------------------19
-alter PROCEDURE sp_GetTheKhachHang
+CREATE PROCEDURE sp_GetTheKhachHang
     @MaThe CHAR(10) = NULL,
     @MaKhachHang CHAR(10) = NULL,
     @CCCD NVARCHAR(50) = NULL
@@ -522,3 +528,102 @@ BEGIN
 
 END
 GO
+
+
+-- Thêm thực đơn mới
+CREATE PROCEDURE sp_ThemThucDon
+    @MaThucDon varchar(10),
+    @TenThucDon nvarchar(100),
+    @KhuVuc nvarchar(50)
+AS
+BEGIN
+    INSERT INTO ThucDon(MaThucDon, TenThucDon, KhuVuc)
+    VALUES(@MaThucDon, @TenThucDon, @KhuVuc)
+END
+GO
+
+-- Cập nhật thực đơn
+CREATE PROCEDURE sp_CapNhatThucDon
+    @MaThucDon varchar(10),
+    @TenThucDon nvarchar(100),
+    @KhuVuc nvarchar(50)
+AS
+BEGIN
+    UPDATE ThucDon 
+    SET TenThucDon = @TenThucDon,
+        KhuVuc = @KhuVuc
+    WHERE MaThucDon = @MaThucDon
+END
+GO
+
+-- Xóa thực đơn
+CREATE PROCEDURE sp_XoaThucDon
+    @MaThucDon varchar(10)
+AS
+BEGIN
+    DELETE FROM ThucDon 
+    WHERE MaThucDon = @MaThucDon
+END
+GO
+
+-- Lấy danh sách thực đơn
+CREATE PROCEDURE sp_LayDanhSachThucDon
+AS
+BEGIN
+    SELECT * FROM ThucDon
+END
+GO
+-- tìm thực đơn
+CREATE PROCEDURE sp_TimKiemThucDon
+    @TuKhoa nvarchar(100)
+AS
+BEGIN
+    DECLARE @TuKhoaKhongDau nvarchar(100)
+    SET @TuKhoaKhongDau = @TuKhoa
+
+    SELECT * FROM ThucDon
+    WHERE 
+        LOWER(MaThucDon) LIKE LOWER(N'%' + @TuKhoa + '%')
+        OR LOWER(TenThucDon) COLLATE Latin1_General_CI_AI LIKE LOWER(N'%' + @TuKhoa + '%')
+        OR LOWER(KhuVuc) COLLATE Latin1_General_CI_AI LIKE LOWER(N'%' + @TuKhoa + '%')
+END
+GO
+
+
+--Tạo mới mã thực đơn
+CREATE PROCEDURE sp_GenerateNewMaThucDon
+    @NewMaThucDon varchar(10) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRY
+        DECLARE @MaxMa varchar(10)
+        DECLARE @NewNumber int
+        
+        -- Lấy mã thực đơn lớn nhất hiện tại
+        SELECT @MaxMa = MAX(MaThucDon) 
+        FROM ThucDon 
+        WHERE MaThucDon LIKE 'TD%'
+        
+        IF @MaxMa IS NULL
+            SET @NewMaThucDon = 'TD01'
+        ELSE
+        BEGIN
+            -- Lấy số từ mã hiện tại và tăng lên 1
+            SET @NewNumber = CAST(SUBSTRING(@MaxMa, 3, 2) AS int) + 1
+            -- Đảm bảo số mới không vượt quá 99
+            IF @NewNumber > 99
+                THROW 50001, 'Đã đạt đến giới hạn mã thực đơn.', 1;
+            SET @NewMaThucDon = 'TD' + RIGHT('00' + CAST(@NewNumber AS varchar(2)), 2)
+        END
+    END TRY
+    BEGIN CATCH
+        -- Nếu có lỗi, trả về mã mặc định
+        SET @NewMaThucDon = 'TD01'
+        -- Có thể log lỗi ở đây nếu cần
+    END CATCH
+END
+go
+
+-- thêm mới nhân viên

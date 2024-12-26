@@ -69,9 +69,9 @@
             button18 = new Button();
             tabPage5 = new TabPage();
             panel11 = new Panel();
-            button9 = new Button();
-            button10 = new Button();
             button11 = new Button();
+            button10 = new Button();
+            button9 = new Button();
             button12 = new Button();
             dataGridView5 = new DataGridView();
             panel12 = new Panel();
@@ -162,6 +162,22 @@
             dtpcnsTo = new DateTimePicker();
             label39 = new Label();
             label40 = new Label();
+            dgvThucDon = new DataGridView();
+            txtMaThucDon = new TextBox();
+            txtTenThucDon = new TextBox();
+            txtKhuVuc = new TextBox();
+            txtTimKiem = new TextBox();
+            lblMaThucDon = new Label();
+            lblTenThucDon = new Label();
+            lblKhuVuc = new Label();
+            btnThem = new Button();
+            btnXoa = new Button();
+            btnSua = new Button();
+            btnTimKiem = new Button();
+            textBox14.ReadOnly = true;
+            textBox13.ReadOnly = false;
+            textBox12.ReadOnly = false;
+            dataGridView5.CellClick += new DataGridViewCellEventHandler(dataGridView5_CellClick);
             tabPage7.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -463,6 +479,7 @@
             button17.TabIndex = 0;
             button17.Text = "Thêm";
             button17.UseVisualStyleBackColor = true;
+            button17.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // dataGridView6
             // 
@@ -521,7 +538,7 @@
             // textBox18
             // 
             textBox18.Location = new Point(114, 21);
-            textBox18.Name = "textBox18";
+            textBox18.Name = "txtMaThucDon";
             textBox18.ReadOnly = true;
             textBox18.Size = new Size(237, 27);
             textBox18.TabIndex = 4;
@@ -559,6 +576,7 @@
             button18.TabIndex = 4;
             button18.Text = "Tìm";
             button18.UseVisualStyleBackColor = true;
+            button18.Click += new EventHandler(btnTimKiem_Click);
             // 
             // tabPage5
             // 
@@ -576,41 +594,44 @@
             // 
             // panel11
             // 
-            panel11.Controls.Add(button9);
-            panel11.Controls.Add(button10);
             panel11.Controls.Add(button11);
+            panel11.Controls.Add(button10);
+            panel11.Controls.Add(button9);
             panel11.Controls.Add(button12);
             panel11.Location = new Point(10, 9);
             panel11.Name = "panel11";
             panel11.Size = new Size(398, 45);
             panel11.TabIndex = 2;
             // 
-            // button9
+            // button11
             // 
-            button9.Location = new Point(301, 1);
-            button9.Name = "button9";
-            button9.Size = new Size(94, 42);
-            button9.TabIndex = 4;
-            button9.Text = "Sửa";
-            button9.UseVisualStyleBackColor = true;
+            button11.Location = new Point(301, 1);
+            button11.Name = "btnThem";
+            button11.Size = new Size(94, 42);
+            button11.TabIndex = 4;
+            button11.Text = "Thêm";
+            button11.UseVisualStyleBackColor = true;
+            button11.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // button10
             // 
             button10.Location = new Point(203, 0);
-            button10.Name = "button10";
+            button10.Name = "btnXoa";
             button10.Size = new Size(94, 42);
             button10.TabIndex = 3;
-            button10.Text = "Sửa";
+            button10.Text = "Xóa";
             button10.UseVisualStyleBackColor = true;
+            button10.Click += new EventHandler(btnXoaThucDon_Click);
             // 
-            // button11
+            // button9
             // 
-            button11.Location = new Point(103, 0);
-            button11.Name = "button11";
-            button11.Size = new Size(94, 42);
-            button11.TabIndex = 3;
-            button11.Text = "Xoá";
-            button11.UseVisualStyleBackColor = true;
+            button9.Location = new Point(103, 0);
+            button9.Name = "btnSua";
+            button9.Size = new Size(94, 42);
+            button9.TabIndex = 3;
+            button9.Text = "Sửa";
+            button9.UseVisualStyleBackColor = true;
+            button9.Click += new EventHandler(btnSuaThucDon_Click);
             // 
             // button12
             // 
@@ -625,7 +646,7 @@
             // 
             dataGridView5.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView5.Location = new Point(13, 75);
-            dataGridView5.Name = "dataGridView5";
+            dataGridView5.Name = "dgvThucDon";
             dataGridView5.RowHeadersWidth = 51;
             dataGridView5.Size = new Size(392, 323);
             dataGridView5.TabIndex = 4;
@@ -646,7 +667,8 @@
             // textBox12
             // 
             textBox12.Location = new Point(114, 87);
-            textBox12.Name = "textBox12";
+            textBox12.Name = "txtMaThucDon";
+            textBox12.ReadOnly = true;
             textBox12.Size = new Size(237, 27);
             textBox12.TabIndex = 4;
             // 
@@ -662,7 +684,8 @@
             // textBox13
             // 
             textBox13.Location = new Point(114, 54);
-            textBox13.Name = "textBox13";
+            textBox13.Name = "txtTenThucDon";
+            textBox13.ReadOnly = false;
             textBox13.Size = new Size(237, 27);
             textBox13.TabIndex = 4;
             // 
@@ -678,7 +701,7 @@
             // textBox14
             // 
             textBox14.Location = new Point(114, 21);
-            textBox14.Name = "textBox14";
+            textBox14.Name = "txtKhuVuc";
             textBox14.ReadOnly = true;
             textBox14.Size = new Size(237, 27);
             textBox14.TabIndex = 4;
@@ -716,6 +739,7 @@
             button13.TabIndex = 4;
             button13.Text = "Tìm";
             button13.UseVisualStyleBackColor = true;
+            button13.Click += new EventHandler(btnTimThucDon_Click);
             // 
             // tabPage4
             // 
@@ -1182,7 +1206,7 @@
             btTimkiem.TabIndex = 50;
             btTimkiem.Text = "Tìm kiếm";
             btTimkiem.UseVisualStyleBackColor = true;
-            btTimkiem.Click += btTimkiem_Click;
+            btTimkiem.Click += new EventHandler(btnTimKiem_Click);
             // 
             // label5
             // 
@@ -1462,6 +1486,105 @@
             label40.TabIndex = 3;
             label40.Text = "Ngày kết thúc ";
             // 
+            // dgvThucDon
+            // 
+            dgvThucDon.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvThucDon.Location = new Point(20, 100);
+            dgvThucDon.Name = "dgvThucDon";
+            dgvThucDon.Size = new Size(600, 300);
+            dgvThucDon.TabIndex = 0;
+            // 
+            // txtMaThucDon
+            // 
+            txtMaThucDon.Location = new Point(120, 20);
+            txtMaThucDon.Name = "txtMaThucDon";
+            txtMaThucDon.Size = new Size(200, 25);
+            // 
+            // txtTenThucDon
+            // 
+            txtTenThucDon.Location = new Point(120, 50);
+            txtTenThucDon.Name = "txtTenThucDon";
+            txtTenThucDon.Size = new Size(200, 25);
+            // 
+            // txtKhuVuc
+            // 
+            txtKhuVuc.Location = new Point(120, 80);
+            txtKhuVuc.Name = "txtKhuVuc";
+            txtKhuVuc.Size = new Size(200, 25);
+            // 
+            // txtTimKiem
+            // 
+            txtTimKiem.Location = new Point(420, 20);
+            txtTimKiem.Name = "txtTimKiem";
+            txtTimKiem.Size = new Size(200, 25);
+            // 
+            // lblMaThucDon
+            // 
+            lblMaThucDon.AutoSize = true;
+            lblMaThucDon.Location = new Point(20, 23);
+            lblMaThucDon.Name = "lblMaThucDon";
+            lblMaThucDon.Size = new Size(71, 20);
+            lblMaThucDon.TabIndex = 0;
+            lblMaThucDon.Text = "Mã thực đơn:";
+            // 
+            // lblTenThucDon
+            // 
+            lblTenThucDon.AutoSize = true;
+            lblTenThucDon.Location = new Point(20, 53);
+            lblTenThucDon.Name = "lblTenThucDon";
+            lblTenThucDon.Size = new Size(71, 20);
+            lblTenThucDon.TabIndex = 0;
+            lblTenThucDon.Text = "Tên thực đơn:";
+            // 
+            // lblKhuVuc
+            // 
+            lblKhuVuc.AutoSize = true;
+            lblKhuVuc.Location = new Point(20, 83);
+            lblKhuVuc.Name = "lblKhuVuc";
+            lblKhuVuc.Size = new Size(71, 20);
+            lblKhuVuc.TabIndex = 0;
+            lblKhuVuc.Text = "Khu vực:";
+            // 
+            // btnThem
+            // 
+            btnThem.Location = new Point(350, 50);
+            btnThem.Name = "btnThem";
+            btnThem.Size = new Size(94, 29);
+            btnThem.TabIndex = 0;
+            btnThem.Text = "Thêm";
+            btnThem.UseVisualStyleBackColor = true;
+            btnThem.Click += new System.EventHandler(this.btnThem_Click);
+            // 
+            // btnXoa
+            // 
+            btnXoa.Location = new Point(450, 50);
+            btnXoa.Name = "btnXoa";
+            btnXoa.Size = new Size(94, 29);
+            btnXoa.TabIndex = 0;
+            btnXoa.Text = "Xóa";
+            btnXoa.UseVisualStyleBackColor = true;
+            btnXoa.Click += new EventHandler(btnXoaThucDon_Click);
+            // 
+            // btnSua
+            // 
+            btnSua.Location = new Point(550, 50);
+            btnSua.Name = "btnSua";
+            btnSua.Size = new Size(94, 29);
+            btnSua.TabIndex = 0;
+            btnSua.Text = "Sửa";
+            btnSua.UseVisualStyleBackColor = true;
+            btnSua.Click += new EventHandler(btnSuaThucDon_Click);
+            // 
+            // btnTimKiem
+            // 
+            btnTimKiem.Location = new Point(630, 20);
+            btnTimKiem.Name = "btnTimKiem";
+            btnTimKiem.Size = new Size(94, 29);
+            btnTimKiem.TabIndex = 0;
+            btnTimKiem.Text = "Tìm kiếm";
+            btnTimKiem.UseVisualStyleBackColor = true;
+            btnTimKiem.Click += new EventHandler(btnTimKiem_Click);
+            // 
             // adminfm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1562,9 +1685,9 @@
         private Button button18;
         private TabPage tabPage5;
         private Panel panel11;
-        private Button button9;
-        private Button button10;
         private Button button11;
+        private Button button10;
+        private Button button9;
         private Button button12;
         private DataGridView dataGridView5;
         private Panel panel12;
@@ -1655,5 +1778,17 @@
         private DateTimePicker dtpcnsfrom;
         private Label label40;
         private Label label39;
+        private DataGridView dgvThucDon;
+        private TextBox txtMaThucDon;
+        private TextBox txtTenThucDon;
+        private TextBox txtKhuVuc;
+        private TextBox txtTimKiem;
+        private Label lblMaThucDon;
+        private Label lblTenThucDon;
+        private Label lblKhuVuc;
+        private Button btnThem;
+        private Button btnXoa;
+        private Button btnSua;
+        private Button btnTimKiem;
     }
 }

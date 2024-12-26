@@ -16,10 +16,12 @@ namespace QuanLySuShi
     public partial class adminfm : Form
     {
         DataGridViewRow select_row_dtgv = null;
+
         public adminfm()
         {
             InitializeComponent();
-            ChiNhanh.LoadChinhanh(cbbchinhanhdt);
+            SetInputState(false);
+              ChiNhanh.LoadChinhanh(cbbchinhanhdt);
             ChiNhanh.LoadChinhanh(cbbchinhanhds);
 
             ChiNhanh.LoadChinhanh(cbbchinhanhcns);
@@ -29,8 +31,6 @@ namespace QuanLySuShi
 
         }
 
-     
-       
         private void label29_Click(object sender, EventArgs e)
         {
 
@@ -73,7 +73,6 @@ namespace QuanLySuShi
                 return;
             }
 
-
             DateTime from = DateTime.Parse(dtfromds.Text);
             DateTime to = DateTime.Parse(dtptods.Text);
             string tenmon = tbtenmonands.Text;
@@ -107,8 +106,7 @@ namespace QuanLySuShi
         }
         private void btTimkiem_Click(object sender, EventArgs e)
         {
-           
-         LoadNhansu();  
+            LoadNhansu();  
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
@@ -118,13 +116,10 @@ namespace QuanLySuShi
 
         private void dtgvcns_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            // Kiểm tra nếu người dùng click vào một dòng hợp lệ (e.RowIndex >= 0)
             if (e.RowIndex >= 0)
             {
-                // Lấy dữ liệu từ dòng đã click
                 select_row_dtgv = dtgvcns.Rows[e.RowIndex];
 
-                // Lấy dữ liệu từ các cột trong dòng
                 string maNhanVien = select_row_dtgv.Cells["MaDinhDanh"].Value.ToString();
                 string hoTen = select_row_dtgv.Cells["HoTen"].Value.ToString();
                 string maBoPhan = select_row_dtgv.Cells["MaBoPhan"].Value?.ToString();
@@ -132,45 +127,36 @@ namespace QuanLySuShi
                 string gioiTinh = select_row_dtgv.Cells["GioiTinh"].Value?.ToString();
                 string TenBophan = select_row_dtgv.Cells["Bophan"].Value?.ToString();
 
-                // Gọi các phương thức DAO để lấy thông tin chi nhánh, bộ phận nếu cần
                 string tenChiNhanh = ChiNhanhDAO.GetChiNhanhByMaChiNhanh(maChiNhanh).TenChiNhanh;
 
-                // Hiển thị thông tin vào các TextBox
                 txchinhanhcnsREAD.Text = tenChiNhanh;
                 txhovatencnsREAD.Text = hoTen;
                 txmanhanviencnsREAD.Text = maNhanVien;
                 txgioitinhREAD.Text = gioiTinh;
                 txbophanREAD.Text = TenBophan;
-
-
-                // Nếu cần, bạn có thể hiển thị thêm các thông tin khác.
             }
         }
 
         private void btnchuyencns_Click(object sender, EventArgs e)
         {
-            // Kiểm tra dòng đã được chọn trong DataGridView
             if (select_row_dtgv == null)
             {
                 MessageBox.Show("Vui lòng chọn nhân viên cần chuyển.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Kiểm tra chi nhánh mới đã được chọn chưa
             if (cbbchuyenchinhanhcns.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn chi nhánh mới.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Kiểm tra bộ phận mới đã được chọn chưa
             if (cbbchuyenbophancns.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn bộ phận mới.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             DateTime ngayBatDau = DateTime.Parse(dtpcnsfrom.Text);
-
 
             DateTime ngayKetThuc = DateTime.Parse(dtpcnsTo.Text);
             if (ngayKetThuc<= ngayBatDau )
@@ -179,30 +165,25 @@ namespace QuanLySuShi
 
                 return;
             }
-            if (ngayBatDau < DateTime.Now)
+
+            if (ngayBatDau.Date < DateTime.Now.Date)
             {
                 MessageBox.Show("Vui lòng chọn ngày bắt đầu tính từ hiện tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 return;
             }
-            /// kiem tra lich su lam viec truoc do ngay bat dau phai be hon ngay bau dau cua hien tai 
             
-            // Lấy dữ liệu từ các điều khiển
             string maNhanVien = txmanhanviencnsREAD.Text;
             string maBoPhanMoi =(( cbbchuyenbophancns.SelectedItem as BoPhan).MaBoPhan).ToString();
             string maChiNhanhMoi = ((cbbchuyenchinhanhcns.SelectedItem as ChiNhanh).MaChiNhanh).ToString();
            
 
-
-            // Gọi hàm chuyển nhân sự từ DAO
             bool isSuccess = NhanvienDAO.ChuyenNhanSu(maNhanVien, maBoPhanMoi, maChiNhanhMoi, ngayBatDau, ngayKetThuc);
 
-            // Kiểm tra kết quả
             if (isSuccess)
             {
                 MessageBox.Show("Chuyển nhân sự thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadNhansu();
-                // Làm mới dữ liệu (nếu cần)
             }
             else
             {
@@ -210,5 +191,317 @@ namespace QuanLySuShi
             }
         }
 
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            // Lấy giá trị từ các textbox (sử dụng tên thật của control)
+            string tenThucDon = textBox13.Text?.Trim();
+            string khuVuc = textBox12.Text?.Trim();
+
+            // Kiểm tra dữ liệu đầu vào chi tiết hơn
+            if (string.IsNullOrEmpty(tenThucDon))
+            {
+                MessageBox.Show("Vui lòng nhập tên thực đơn!");
+                textBox13.Focus();
+                return;
+            }
+
+            if (string.IsNullOrEmpty(khuVuc))
+            {
+                MessageBox.Show("Vui lòng nhập khu vực!");
+                textBox12.Focus();
+                return;
+            }
+
+            try
+            {
+                // Tạo mã thực đơn mới
+                string maThucDon = ThucDonDAO.GenerateNewMaThucDon();
+
+                // Tạo đối tượng thực đơn mới
+                var thucDon = new ThucDon
+                {
+                    MaThucDon = maThucDon,
+                    TenThucDon = tenThucDon,
+                    KhuVuc = khuVuc
+                };
+
+                // Thêm vào CSDL
+                if (ThucDonDAO.AddThucDon(thucDon))
+                {
+                    MessageBox.Show("Thêm thực đơn thành công!");
+                    // Nếu đang có từ khóa tìm kiếm thì load lại kết quả tìm kiếm
+                    string tuKhoa = textBox15?.Text?.Trim() ?? string.Empty;
+                    if (!string.IsNullOrEmpty(tuKhoa))
+                    {
+                        var ketQua = ThucDonDAO.SearchThucDon(tuKhoa);
+                        dataGridView5.DataSource = ketQua;
+                    }
+                    else
+                    {
+                        LoadDanhSachThucDon(); // Load tất cả nếu không có từ khóa
+                    }
+                    
+                    ClearInputs();
+                    LoadDataThucDon();
+                    // Clear các textbox
+                    textBox13.Clear();
+                    textBox12.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}");
+            }
+        }
+
+        private void btnXoaThucDon_Click(object sender, EventArgs e)
+        {
+            try 
+            {
+                // Kiểm tra xem đã chọn dòng nào chưa
+                if (dataGridView5.CurrentRow == null || dataGridView5.CurrentRow.Index < 0)
+                {
+                    MessageBox.Show("Vui lòng chọn thực đơn cần xóa!");
+                    return;
+                }
+
+                // Lấy mã thực đơn từ dòng được chọn
+                string maThucDon = dataGridView5.CurrentRow.Cells["MaThucDon"].Value?.ToString();
+                
+                if (string.IsNullOrEmpty(maThucDon))
+                {
+                    MessageBox.Show("Không tìm thấy mã thực đơn!");
+                    return;
+                }
+
+                // Hiển thị hộp thoại xác nhận
+                var result = MessageBox.Show(
+                    "Bạn có chắc chắn muốn xóa thực đơn này?",
+                    "Xác nhận xóa",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    if (ThucDonDAO.DeleteThucDon(maThucDon))
+                    {
+                        MessageBox.Show("Xóa thực đơn thành công!");
+                        // Nếu đang có từ khóa tìm kiếm thì load lại kết quả tìm kiếm
+                        string tuKhoa = textBox15?.Text?.Trim() ?? string.Empty;
+                        if (!string.IsNullOrEmpty(tuKhoa))
+                        {
+                            var ketQua = ThucDonDAO.SearchThucDon(tuKhoa);
+                            dataGridView5.DataSource = ketQua;
+                        }
+                        else
+                        {
+                            LoadDanhSachThucDon(); // Load tất cả nếu không có từ khóa
+                        }
+                        
+                        ClearInputs();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa thực đơn thất bại!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi xóa thực đơn: {ex.Message}");
+            }
+        }
+
+        private void btnSuaThucDon_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(textBox14?.Text) ||
+                    string.IsNullOrWhiteSpace(textBox13?.Text) || 
+                    string.IsNullOrWhiteSpace(textBox12?.Text))
+                {
+                    MessageBox.Show("Vui lòng chọn thực đơn cần sửa và nhập đầy đủ thông tin!");
+                    return;
+                }
+
+                var thucDon = new ThucDon
+                {
+                    MaThucDon = textBox14.Text.Trim(),
+                    TenThucDon = textBox13.Text.Trim(),
+                    KhuVuc = textBox12.Text.Trim()
+                };
+
+                if (ThucDonDAO.UpdateThucDon(thucDon))
+                {
+                    MessageBox.Show("Cập nhật thực đơn thành công!");
+                    
+                    // Nếu đang có từ khóa tìm kiếm thì load lại kết quả tìm kiếm
+                    string tuKhoa = textBox15?.Text?.Trim() ?? string.Empty;
+                    if (!string.IsNullOrEmpty(tuKhoa))
+                    {
+                        var ketQua = ThucDonDAO.SearchThucDon(tuKhoa);
+                        dataGridView5.DataSource = ketQua;
+                    }
+                    else
+                    {
+                        LoadDanhSachThucDon(); // Load tất cả nếu không có từ khóa
+                    }
+                    
+                    ClearInputs();
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật thực đơn thất bại!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi cập nhật thực đơn: {ex.Message}");
+            }
+        }
+
+        private void btnTimThucDon_Click(object sender, EventArgs e)
+        {
+            try 
+            {
+                string tuKhoa = textBox15.Text.Trim();
+                
+                if (string.IsNullOrEmpty(tuKhoa))
+                {
+                    MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm!");
+                    return;
+                }
+
+                var ketQua = ThucDonDAO.SearchThucDon(tuKhoa);
+                
+                if (ketQua != null && ketQua.Any())
+                {
+                    dataGridView5.DataSource = ketQua;
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy kết quả nào!");
+                    LoadDanhSachThucDon();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tìm kiếm: {ex.Message}");
+            }
+        }
+
+        private void LoadThucDon()
+        {
+            try
+            {
+                if (dgvThucDon != null)
+                {
+                    var danhSach = ThucDonDAO.GetAllThucDon();
+                    dgvThucDon.DataSource = danhSach;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi load thực đơn: {ex.Message}");
+            }
+        }
+
+        private void LoadDanhSachThucDon()
+        {
+            try
+            {
+                if (dgvThucDon != null)
+                {
+                    var danhSach = ThucDonDAO.GetAllThucDon();
+                    if (danhSach != null)
+                    {
+                        dgvThucDon.DataSource = null;
+                        dgvThucDon.DataSource = danhSach;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải danh sách thực đơn: {ex.Message}");
+            }
+        }
+
+        private void btnTimKiem_Click(object sender, EventArgs e)
+        {
+            try 
+            {
+                string tuKhoa = txtTimKiem.Text.Trim();
+                
+                if (string.IsNullOrEmpty(tuKhoa))
+                {
+                    MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm!");
+                    return;
+                }
+
+                tuKhoa = "%" + tuKhoa + "%";
+                var ketQua = ThucDonDAO.SearchThucDon(tuKhoa);
+                
+                if (ketQua != null && ketQua.Any())
+                {
+                    dgvThucDon.DataSource = ketQua;
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy kết quả nào!");
+                    LoadDanhSachThucDon();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tìm kiếm: {ex.Message}");
+            }
+        }
+
+        private void dataGridView5_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView5.Rows[e.RowIndex];
+                
+                textBox14.Text = row.Cells["MaThucDon"].Value?.ToString();
+                textBox13.Text = row.Cells["TenThucDon"].Value?.ToString();
+                textBox12.Text = row.Cells["KhuVuc"].Value?.ToString();
+                SetInputState(true);
+            }
+        }
+
+        private void ClearInputs()
+        {
+            textBox14.Clear();
+            textBox13.Clear();
+            textBox12.Clear();
+        }
+
+        private void SetInputState(bool isEditing)
+        {
+            if (textBox14 != null) textBox14.ReadOnly = true;
+            if (textBox13 != null) textBox13.ReadOnly = false;
+            if (textBox12 != null) textBox12.ReadOnly = false;
+        }
+
+        private void Debug_ShowTextBoxValues()
+        {
+            MessageBox.Show($"Tên thực đơn: '{textBox13.Text}'\n" +
+                           $"Độ dài: {textBox13.Text.Length}\n" +
+                           $"Có khoảng trắng đầu/cuối: {textBox13.Text != textBox13.Text.Trim()}");
+        }
+
+        private void LoadData()
+        {
+            dgvThucDon.DataSource = ThucDonDAO.GetThucDon();
+        }
+
+        private void LoadDataThucDon()
+        {
+            var danhSachThucDon = ThucDonDAO.GetAllThucDon();
+            dgvThucDon.DataSource = null;
+            dgvThucDon.DataSource = danhSachThucDon;
+        }
     }
 }
