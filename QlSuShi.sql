@@ -1,9 +1,15 @@
-﻿-- Kiểm tra xem cơ sở dữ liệu có tồn tại không
+﻿USE master;
+GO
+-- Kiểm tra xem cơ sở dữ liệu có tồn tại không
 IF EXISTS (SELECT * FROM sys.databases WHERE name = 'QLShiShu')
 BEGIN
-    -- Nếu có, xoá cơ sở dữ liệu
+    -- Ngắt tất cả các kết nối đến cơ sở dữ liệu
+    ALTER DATABASE QLShiShu SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+
+    -- Xóa cơ sở dữ liệu
     DROP DATABASE QLShiShu;
 END;
+
 create database QLShiShu
 go
 use QLShiShu
@@ -373,4 +379,3 @@ FOREIGN KEY (MaPhieu) REFERENCES [dbo].PhieuDatMon(MaPhieu);
 ALTER TABLE [dbo].[PhieuDatMonTrucTuyen]
 ADD CONSTRAINT FK_PhieuDatMonTrucTuyen_MaPhieu
 FOREIGN KEY (MaPhieu) REFERENCES [dbo].PhieuDatMon(MaPhieu);
-

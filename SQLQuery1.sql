@@ -1,4 +1,4 @@
-----------1
+------------1
 CREATE PROCEDURE sp_XoaMonAnTheoMaPhieu
     @MaMonAn CHAR(10),  -- tham số mã món ăn
     @MaPhieu CHAR(10)   -- tham số mã phiếu
@@ -227,7 +227,8 @@ BEGIN
     
     SELECT 'Phieu Dat Mon Created Successfully' AS Status;
 END;
-GO
+go
+
 --------------12
 CREATE PROCEDURE dbo.sp_AddHoaDon
     @MaHoaDon CHAR(10),
@@ -447,7 +448,8 @@ BEGIN
    
 END;
 ------------------19
-alter PROCEDURE sp_GetTheKhachHang
+go
+create PROCEDURE sp_GetTheKhachHang
     @MaThe CHAR(10) = NULL,
     @MaKhachHang CHAR(10) = NULL,
     @CCCD NVARCHAR(50) = NULL

@@ -527,7 +527,7 @@ namespace QuanLySuShi
 
         }
 
-        private void btThaydoi_Click(object sender, EventArgs e)
+        private void btThaydoi_Click(object sender, EventArgs e) //thay đổi thông tin
         {
 
         }
