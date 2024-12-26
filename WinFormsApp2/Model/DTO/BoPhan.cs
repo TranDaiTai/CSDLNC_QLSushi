@@ -39,13 +39,17 @@ namespace QuanLySuShi.Model.DTO
         {
             cbx.Items.Clear();
             List<BoPhan> listbophans = BoPhanDAO.GetBoPhan();
-
+            
             foreach (var item in listbophans)
             {
                 cbx.Items.Add(item);
                 cbx.DisplayMember = "TenBoPhan";
-
             }
+        }
+
+        public override string ToString()
+        {
+            return TenBoPhan; // Trả về tên bộ phận để hiển thị trong ComboBox
         }
     }
 }

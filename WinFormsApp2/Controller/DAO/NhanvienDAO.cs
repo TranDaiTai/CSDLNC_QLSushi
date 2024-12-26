@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace QuanLySuShi.Controller.DAO
 {
@@ -77,7 +78,7 @@ namespace QuanLySuShi.Controller.DAO
                 { "@MaBoPhan", mabophan }
             };
 
-            // Thực thi truy vấn
+            // Th��c thi truy vấn
             DataTable dataTable = DataProvider.ExecuteSelectQuery(query, parameters);
 
             // Kiểm tra kết quả trả về
@@ -153,7 +154,7 @@ namespace QuanLySuShi.Controller.DAO
                 { "@MaBoPhanMoi", maBoPhanMoi },
                 { "@MaChiNhanhMoi", maChiNhanhMoi },
                 { "@NgayBatDau", ngayBatDau},
-                { "@NgayKetThuc" , ngayKetThuc }
+                { "@NgayKetThuc" , ngayKetThuc}
             };
 
 
@@ -188,6 +189,55 @@ namespace QuanLySuShi.Controller.DAO
                 // Nếu không có phiếu nào, trả về mã phiếu đầu tiên là PD001
                 return "LS001";
             }
+        }
+
+        public static bool ThemNhanVien(NhanVien nhanVien)
+        {
+            try
+            {
+                string query = @"INSERT INTO NhanVien (MaNhanVien, HoTen, NgaySinh, GioiTinh, 
+                                NgayVaoLam, MaBoPhan, MaChiNhanh, DiaChi, TaiKhoan, MatKhau)
+                                VALUES (@MaNhanVien, @HoTen, @NgaySinh, @GioiTinh, 
+                                @NgayVaoLam, @MaBoPhan, @MaChiNhanh, @DiaChi, @TaiKhoan, @MatKhau)";
+
+                string maNhanVien = GenerateMaNhanVien();
+
+                Dictionary<string, object> parameters = new Dictionary<string, object>
+                {
+                    { "@MaNhanVien", maNhanVien },
+                    { "@HoTen", nhanVien.HoTen },
+                    { "@NgaySinh", (object?)nhanVien.NgaySinh ?? DBNull.Value },
+                    { "@GioiTinh", (object?)nhanVien.GioiTinh ?? DBNull.Value },
+                    { "@NgayVaoLam", nhanVien.NgayVaoLam },
+                    { "@MaBoPhan", nhanVien.MaBoPhan },
+                    { "@MaChiNhanh", nhanVien.MaChiNhanh },
+                    { "@DiaChi", (object?)nhanVien.DiaChi ?? DBNull.Value },
+                    { "@TaiKhoan", nhanVien.TaiKhoan },
+                    { "@MatKhau", nhanVien.MatKhau }
+                };
+
+                return DataProvider.ExecuteNonQuery(query, parameters);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi thêm nhân viên: {ex.Message}");
+                return false;
+            }
+        }
+
+        private static string GenerateMaNhanVien()
+        {
+            string query = "SELECT TOP 1 MaNhanVien FROM NhanVien ORDER BY MaNhanVien DESC";
+            DataTable result = DataProvider.ExecuteSelectQuery(query);
+            
+            if (result.Rows.Count > 0)
+            {
+                string lastId = result.Rows[0]["MaNhanVien"].ToString();
+                int number = int.Parse(lastId.Substring(2)) + 1;
+                return $"NV{number:D8}"; // Format để có độ dài 10 ký tự (NV + 8 số)
+            }
+            
+            return "NV00000001";
         }
 
     }

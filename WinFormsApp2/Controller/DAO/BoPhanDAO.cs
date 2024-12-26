@@ -67,7 +67,10 @@ namespace QuanLySuShi.Controller.DAO
             // Thực hiện câu lệnh UPDATE
             return DataProvider.ExecuteNonQuery(query, parameters);
         }
-
-
+        
+        public static List<BoPhan> GetAll()
+        {
+            return GetBoPhan();
+        }
     }
 }

@@ -55,13 +55,17 @@ namespace QuanLySuShi.Model.DTO
         {
             cbx.Items.Clear();
             List<ChiNhanh> listchinhanhs = ChiNhanhDAO.GetAllChiNhanh();
-
+            
             foreach (var item in listchinhanhs)
             {
                 cbx.Items.Add(item);
                 cbx.DisplayMember = "TenChiNhanh";
-
             }
+        }
+
+        public override string ToString()
+        {
+            return TenChiNhanh;
         }
     }
 }
