@@ -14,6 +14,7 @@ namespace QuanLySuShi.Model.DTO
         public string ChuongTrinh { get; set; } //  public string TangSanPham { get; set; } //   NULL
         public double? UuDaiChietKhau { get; set; } // [float] NULL
         public string LoaiTheApDung { get; set; } //   NULL
+        public string TangSanPham { get; set; } //   NULL
         public DateTime NgayBatDau { get; set; } // [date] NOT NULL
         public DateTime NgayKetThuc { get; set; } // [date] NOT NULL
 
@@ -32,6 +33,7 @@ namespace QuanLySuShi.Model.DTO
             MaUuDai = maUuDai;
             GiamGia = giamGia;
             ChuongTrinh = chuongTrinh;
+            TangSanPham = tangSanPham;
             UuDaiChietKhau = uuDaiChietKhau;
             LoaiTheApDung = loaiTheApDung;
             NgayBatDau = ngayBatDau;
@@ -49,6 +51,7 @@ namespace QuanLySuShi.Model.DTO
                 MaUuDai = row["MaUuDai"].ToString(),
                 GiamGia = row["GiamGia"] != DBNull.Value ? (decimal?)row["GiamGia"] : null,
                 ChuongTrinh = row["ChuongTrinh"].ToString(),
+                TangSanPham = row["TangSanPham"].ToString(),
                 UuDaiChietKhau = row["UuDaiChietKhau"] != DBNull.Value ? (double?)row["UuDaiChietKhau"] : null,
                 LoaiTheApDung = row["LoaiTheApDung"].ToString(),
                 NgayBatDau = Convert.ToDateTime(row["NgayBatDau"]),

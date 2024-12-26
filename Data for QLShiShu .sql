@@ -152,6 +152,16 @@ VALUES
 ('PD02', '2024-12-15 11:00', '2024-12-15 11:15', N'Đặt qua app', N'Tại quán');
 
 go
+
+-- Thêm dữ liệu vào bảng KhachHang
+INSERT INTO TheKhachHang (MaThe, LoaiThe, DiemTichLuy, NgayLap, MaNhanVienLapThe, MaKhachHang)
+VALUES
+('TH001', 'Gold', 150, '2023-01-15', 'NV001', 'KH01'),
+('TH002', 'Silver', 80, '2023-02-20', 'NV002', 'KH02'),
+('TH003', 'Membership', 30, '2023-03-05', 'NV001', 'KH01'),
+('TH004', 'Gold', 200, '2023-04-10', 'NV003', 'KH02'),
+('TH005', 'Silver', 120, '2023-05-25', 'NV002', 'KH01');
+GO
 -- Kích hoạt lại ràng buộc khóa ngoại
 ALTER TABLE ChiNhanh CHECK CONSTRAINT ALL;
 ALTER TABLE NhanVien CHECK CONSTRAINT ALL;

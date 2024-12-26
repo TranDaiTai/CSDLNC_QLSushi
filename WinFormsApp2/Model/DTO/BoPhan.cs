@@ -24,7 +24,6 @@ namespace QuanLySuShi.Model.DTO
             TenBoPhan = tenBoPhan;
             Luong = luong;
         }
-
         // Phương thức chuyển đổi từ DataRow sang đối tượng BoPhan
         public static BoPhan FromDataRow(DataRow row)
         {

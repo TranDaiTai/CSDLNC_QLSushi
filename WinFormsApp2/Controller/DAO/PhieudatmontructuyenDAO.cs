@@ -9,7 +9,7 @@ namespace QuanLySuShi.Controller.DAO
 {
     internal class PhieudatmonTrucTuyenDAO
     {
-        protected static bool CreatePhieuDatMonTrucTuyen(
+        public static bool CreatePhieuDatMonTrucTuyen(
         string maPhieu, DateTime thoiDiemTruyCap, DateTime? thoiGianTruyCap, string? ghiChu, string loaiDichVu)
         {
             // Tên stored procedure
@@ -62,20 +62,16 @@ namespace QuanLySuShi.Controller.DAO
 
     internal class PhieuDatMonTaiQuanDAO : PhieudatmonTrucTuyenDAO
     {
-        public static bool CreatePhieuDatMonTaiQuan(string maPhieu, DateTime thoiDiemTruyCap, DateTime? thoiGianTruyCap, string ghiChu, string loaiDichVu, int? soLuongKhach, string maBan, DateTime? ngayDat)
+        public static bool CreatePhieuDatMonTaiQuan(string maPhieu, int? soLuongKhach, string maBan, DateTime? ngayDat)
         {
             // Câu truy vấn SQL
-            string query = "INSERT INTO PhieuDatMonTaiQuan (MaPhieu, ThoiDiemTruyCap, ThoiGianTruyCap, GhiChu, LoaiDichVu, SoLuongKhach, MaBan, NgayDat) " +
-                           "VALUES (@MaPhieu, @ThoiDiemTruyCap, @ThoiGianTruyCap, @GhiChu, @LoaiDichVu, @SoLuongKhach, @MaBan, @NgayDat);";
+            string query = "INSERT INTO PhieuDatMonTrucTuyenTaiQuan (MaPhieu, SoLuongKhach, MaBan, NgayDat) " +
+                           "VALUES (@MaPhieu, @SoLuongKhach, @MaBan, @NgayDat);";
 
             // Tạo dictionary chứa tham số
             var parameters = new Dictionary<string, object>
             {
                 { "@MaPhieu", maPhieu },
-                { "@ThoiDiemTruyCap", thoiDiemTruyCap == null ? DBNull.Value : thoiDiemTruyCap },
-                { "@ThoiGianTruyCap", thoiGianTruyCap == null ? DBNull.Value : thoiGianTruyCap },
-                { "@GhiChu", string.IsNullOrEmpty(ghiChu) ? DBNull.Value : ghiChu },
-                { "@LoaiDichVu", string.IsNullOrEmpty(loaiDichVu) ? DBNull.Value : loaiDichVu },
                 { "@SoLuongKhach", soLuongKhach == null ? DBNull.Value : soLuongKhach },
                 { "@MaBan", string.IsNullOrEmpty(maBan) ? DBNull.Value : maBan },
                 { "@NgayDat", ngayDat == null ? DBNull.Value : ngayDat }
@@ -84,5 +80,19 @@ namespace QuanLySuShi.Controller.DAO
             // Gọi hàm thực thi lệnh SQL
             return DataProvider.ExecuteNonQuery(query, parameters);
         }
+        public static string GetNextMaBan()
+        {
+            // Câu truy vấn SQL để gọi hàm lấy mã bàn tiếp theo
+            string query = "SELECT dbo.fn_GetNextMaBan();";
+
+            // Thực thi truy vấn và lấy kết quả
+            DataTable dataTable = DataProvider.ExecuteSelectQuery(query);
+
+            // Lấy giá trị mã bàn từ kết quả truy vấn
+            string nextMaBan = (string)dataTable.Rows[0][0];
+
+            return nextMaBan;
+        }
+
     }
 }

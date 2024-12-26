@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Runtime.Intrinsics.Arm;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.Devices;
 using QuanLySuShi.Model.DTO;
 namespace QuanLySuShi.Controller.DAO
 {
@@ -42,7 +43,6 @@ namespace QuanLySuShi.Controller.DAO
                 { "@MaChiNhanh", machinhanh },
                 { "@MaKhachhang", maKhachhang},
                 { "@LoaiPhieu", loaiphieu}
-
             };
 
             // Thực thi câu lệnh SQL và trả về kết quả
@@ -127,7 +127,5 @@ namespace QuanLySuShi.Controller.DAO
 
         }
     }
-
-
 }
 

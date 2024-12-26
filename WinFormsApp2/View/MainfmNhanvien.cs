@@ -298,9 +298,11 @@ namespace QuanLySuShi
 
             if (current_maphieu_tai_ban != null)
             {
+                // Tính tổng số tiền
+                decimal tongSoTien = ChitietphieuDAO.GetTongSoTienByMaPhieu(current_maphieu_tai_ban);
 
                 string mahoadon = HoaDonDAO.GetNextHoaDon();
-                HoaDonDAO.AddHoaDon(mahoadon, (Dangnhap.user as NhanVien).MaChiNhanh, current_maphieu_tai_ban, UuDaiDAO.GetUuDais(_mauudai_taiBan)[0]);
+                HoaDonDAO.AddHoaDon(mahoadon, (Dangnhap.user as NhanVien).MaChiNhanh, current_maphieu_tai_ban, UuDaiDAO.GetUuDais(_mauudai_taiBan)[0], tongSoTien);
 
 
                 selectTable.Status = Table.GetTableStatus(selectTable.TableID);
