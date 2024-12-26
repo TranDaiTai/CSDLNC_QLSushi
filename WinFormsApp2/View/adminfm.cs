@@ -21,13 +21,7 @@ namespace QuanLySuShi
         {
             InitializeComponent();
             SetInputState(false);
-              ChiNhanh.LoadChinhanh(cbbchinhanhdt);
-            ChiNhanh.LoadChinhanh(cbbchinhanhds);
-
-            ChiNhanh.LoadChinhanh(cbbchinhanhcns);
-            ChiNhanh.LoadChinhanh(cbbchuyenchinhanhcns);
-
-            BoPhan.LoadBoPhan(cbbchuyenbophancns);
+            LoadComboBoxData();
 
         }
 
@@ -91,18 +85,40 @@ namespace QuanLySuShi
         }
         public void LoadNhansu()
         {
-            if (cbbchinhanhcns.SelectedIndex == -1)
+            try
             {
+                if (cbbchinhanhcns?.SelectedIndex == -1 || cbbchinhanhcns?.SelectedItem == null)
+                {
+                    return;
+                }
 
-                return;
+                var selectedChiNhanh = cbbchinhanhcns.SelectedItem as ChiNhanh;
+                if (selectedChiNhanh == null)
+                {
+                    MessageBox.Show("Vui lòng chọn chi nhánh hợp lệ", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string searchText = tbHovatencns?.Text?.Trim() ?? string.Empty;
+                List<NhanVien> nv = NhanvienDAO.GetNhanVienByChiNhanhVaHoTen(
+                    selectedChiNhanh.MaChiNhanh, 
+                    searchText);
+
+                if (dtgvcns != null)
+                {
+                    dtgvcns.DataSource = nv;
+                    dtgvcns.Columns["Quanlychinhanh"].Visible = false;
+                    dtgvcns.Columns["taikhoan"].Visible = false;
+                    dtgvcns.Columns["matkhau"].Visible = false;
+                    dtgvcns.Columns["Diachi"].Visible = false;
+                }
             }
-            List<NhanVien> nv = NhanvienDAO.GetNhanVienByChiNhanhVaHoTen((cbbchinhanhcns.SelectedItem as ChiNhanh).MaChiNhanh, tbHovatencns.Text);
-
-            dtgvcns.DataSource = nv;
-            dtgvcns.Columns["Quanlychinhanh"].Visible = false;
-            dtgvcns.Columns["taikhoan"].Visible = false;
-            dtgvcns.Columns["matkhau"].Visible = false;
-            dtgvcns.Columns["Diachi"].Visible = false;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải danh sách nhân sự: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void btTimkiem_Click(object sender, EventArgs e)
         {
@@ -502,6 +518,90 @@ namespace QuanLySuShi
             var danhSachThucDon = ThucDonDAO.GetAllThucDon();
             dgvThucDon.DataSource = null;
             dgvThucDon.DataSource = danhSachThucDon;
+        }
+
+        private void adminfm_Load(object sender, EventArgs e)
+        {
+            // Các xử lý khác nếu có
+        }
+
+        private void btnThemNhanVien_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var selectedBoPhan = cboBoPhan.SelectedItem as BoPhan;
+                var selectedChiNhanh = cboChiNhanh.SelectedItem as ChiNhanh;
+
+                if (string.IsNullOrEmpty(txtHoTen?.Text?.Trim()) || 
+                    string.IsNullOrEmpty(txtTaiKhoan?.Text?.Trim()) ||
+                    string.IsNullOrEmpty(txtMatKhau?.Text?.Trim()) ||
+                    cboGioiTinh?.SelectedIndex == -1 ||
+                    selectedChiNhanh == null ||
+                    selectedBoPhan == null ||
+                    dtpNgaySinh?.Value == null)
+                {
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin bắt buộc!", "Thông báo", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Tạo đối tượng NhanVien mới
+                NhanVien nhanVien = new NhanVien
+                {
+                    HoTen = txtHoTen.Text.Trim(),
+                    DiaChi = txtDiaChi?.Text?.Trim() ?? string.Empty,
+                    NgaySinh = dtpNgaySinh.Value,
+                    NgayVaoLam = dtpNgayVaoLam?.Value ?? DateTime.Now,
+                    GioiTinh = cboGioiTinh.Text,
+                    MaBoPhan = selectedBoPhan.MaBoPhan,
+                    MaChiNhanh = selectedChiNhanh.MaChiNhanh,
+                    TaiKhoan = txtTaiKhoan.Text.Trim(),
+                    MatKhau = txtMatKhau.Text.Trim()
+                };
+
+                // Thêm nhân viên
+                if (NhanvienDAO.ThemNhanVien(nhanVien))
+                {
+                    MessageBox.Show("Thêm nhân viên thành công!", "Thông báo", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearNhanVienForm();
+                    LoadNhansu();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ClearNhanVienForm()
+        {
+            txtHoTen.Clear();
+            dtpNgaySinh.Value = DateTime.Now;
+            txtDiaChi.Clear();
+            txtTaiKhoan.Clear();
+            txtMatKhau.Clear();
+            cboGioiTinh.SelectedIndex = -1;
+            cboChiNhanh.SelectedIndex = -1;
+            cboBoPhan.SelectedIndex = -1;
+            dtpNgayVaoLam.Value = DateTime.Now;
+        }
+
+        private void LoadComboBoxData()
+        {
+            // Load dữ liệu cho ComboBox Giới tính
+            cboGioiTinh.Items.Clear();
+            cboGioiTinh.Items.AddRange(new object[] { "Nam", "Nữ" });
+
+            // Load dữ liệu cho ComboBox Chi nhánh
+            ChiNhanh.LoadChinhanh(cboChiNhanh);
+            ChiNhanh.LoadChinhanh(cbbchinhanhcns);
+            ChiNhanh.LoadChinhanh(cbbchuyenchinhanhcns);
+
+            // Load dữ liệu cho ComboBox Bộ phận
+            BoPhan.LoadBoPhan(cboBoPhan);
+            BoPhan.LoadBoPhan(cbbchuyenbophancns);
         }
     }
 }
