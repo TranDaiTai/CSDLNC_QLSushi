@@ -15,6 +15,10 @@ namespace QuanLySuShi.Controller.DAO
         const string connstring = "Data Source=LAPTOP-EB636979;Initial Catalog=QLShiShu;Integrated Security=True;TrustServerCertificate=True";
         public static SqlConnection connection;
 
+        public static string GetConnectionString()
+        {
+            return connstring;
+        }
 
         public static DataProvider Instance
         {
