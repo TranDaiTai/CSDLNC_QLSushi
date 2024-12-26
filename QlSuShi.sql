@@ -1,4 +1,6 @@
-﻿-- Kiểm tra xem cơ sở dữ liệu có tồn tại không
+﻿use master
+go
+-- Kiểm tra xem cơ sở dữ liệu có tồn tại không
 IF EXISTS (SELECT * FROM sys.databases WHERE name = 'QLShiShu')
 BEGIN
     -- Nếu có, xoá cơ sở dữ liệu

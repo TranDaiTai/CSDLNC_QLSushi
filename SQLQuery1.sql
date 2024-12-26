@@ -628,3 +628,46 @@ END
 go
 
 -- thêm mới nhân viên
+
+-- Thêm stored procedure cho Mục
+CREATE PROCEDURE sp_AddMuc
+    @MaMuc CHAR(10),
+    @TenMuc NVARCHAR(100),
+    @MaThucDon CHAR(10)
+AS
+BEGIN
+    INSERT INTO Muc (MaMuc, TenMuc, MaThucDon)
+    VALUES (@MaMuc, @TenMuc, @MaThucDon);
+END
+GO
+
+CREATE PROCEDURE sp_UpdateMuc
+    @MaMuc CHAR(10),
+    @TenMuc NVARCHAR(100),
+    @MaThucDon CHAR(10)
+AS
+BEGIN
+    UPDATE Muc
+    SET TenMuc = @TenMuc, MaThucDon = @MaThucDon
+    WHERE MaMuc = @MaMuc;
+END
+GO
+
+CREATE PROCEDURE sp_DeleteMuc
+    @MaMuc CHAR(10)
+AS
+BEGIN
+    DELETE FROM Muc
+    WHERE MaMuc = @MaMuc;
+END
+GO
+
+CREATE PROCEDURE sp_SearchMuc
+    @TuKhoa NVARCHAR(100)
+AS
+BEGIN
+    SELECT * FROM Muc
+    WHERE LOWER(MaMuc) LIKE LOWER(N'%' + @TuKhoa + '%')
+    OR LOWER(TenMuc) COLLATE Latin1_General_CI_AI LIKE LOWER(N'%' + @TuKhoa + '%');
+END
+GO

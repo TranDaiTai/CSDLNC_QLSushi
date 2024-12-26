@@ -17,6 +17,14 @@ namespace QuanLySuShi.Model.DTO
             TenMuc = tenMuc;
             MaThucDon = maThucDon;
         }
+
+        public Muc()
+        {
+            MaMuc = string.Empty;
+            TenMuc = string.Empty;
+            MaThucDon = string.Empty;
+        }
+
         public Muc(DataRow row)
         {
 

@@ -51,6 +51,38 @@ namespace QuanLySuShi.Controller.DAO
             return DataProvider.ExecuteSelectQuery(query, parameters);
         }
 
+        public static void AddDish(MonAn dish)
+        {
+            string query = "INSERT INTO MonAn (TenMonAn, GiaTien) VALUES (@TenMonAn, @GiaTien)";
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "@TenMonAn", dish.TenMonAn },
+                { "@GiaTien", dish.GiaTien }
+            };
+            DataProvider.ExecuteNonQuery(query, parameters);
+        }
+
+        public static void UpdateDish(MonAn dish)
+        {
+            string query = "UPDATE MonAn SET TenMonAn = @TenMonAn, GiaTien = @GiaTien WHERE MaMonAn = @MaMonAn";
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "@TenMonAn", dish.TenMonAn },
+                { "@GiaTien", dish.GiaTien },
+                { "@MaMonAn", dish.MaMonAn }
+            };
+            DataProvider.ExecuteNonQuery(query, parameters);
+        }
+
+        public static void DeleteDish(string maMonAn)
+        {
+            string query = "DELETE FROM MonAn WHERE MaMonAn = @MaMonAn";
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "@MaMonAn", maMonAn }
+            };
+            DataProvider.ExecuteNonQuery(query, parameters);
+        }
 
     }
 }

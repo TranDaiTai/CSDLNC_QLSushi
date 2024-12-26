@@ -12,7 +12,7 @@ namespace QuanLySuShi.Controller.DAO
     public class DataProvider
     {
         private static DataProvider instance;
-        const string connstring = "Data Source=DESKTOP-RI069V5;Initial Catalog=QLShiShu;Integrated Security=True;TrustServerCertificate=True";
+        const string connstring = "Data Source=LAPTOP-EB636979;Initial Catalog=QLShiShu;Integrated Security=True;TrustServerCertificate=True";
         public static SqlConnection connection;
 
 

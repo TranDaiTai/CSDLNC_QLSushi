@@ -98,7 +98,7 @@ namespace QuanLySuShi
         }
         private void btTimkiem_Click(object sender, EventArgs e)
         {
-            LoadNhansu();  
+            LoadNhansu();
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
@@ -151,7 +151,7 @@ namespace QuanLySuShi
             DateTime ngayBatDau = DateTime.Parse(dtpcnsfrom.Text);
 
             DateTime ngayKetThuc = DateTime.Parse(dtpcnsTo.Text);
-            if (ngayKetThuc<= ngayBatDau )
+            if (ngayKetThuc <= ngayBatDau)
             {
                 MessageBox.Show("Vui lòng chọn ngày bắt đầu nhỏ hơn ngày kết thúc.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -160,15 +160,15 @@ namespace QuanLySuShi
 
             if (ngayBatDau.Date < DateTime.Now.Date)
             {
-                MessageBox.Show("Vui lòng chọn ngày bắt đầu tính từ hiện tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn ngày bắt đầu tính từ hi���n tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 return;
             }
-            
+
             string maNhanVien = txmanhanviencnsREAD.Text;
-            string maBoPhanMoi =(( cbbchuyenbophancns.SelectedItem as BoPhan).MaBoPhan).ToString();
+            string maBoPhanMoi = ((cbbchuyenbophancns.SelectedItem as BoPhan).MaBoPhan).ToString();
             string maChiNhanhMoi = ((cbbchuyenchinhanhcns.SelectedItem as ChiNhanh).MaChiNhanh).ToString();
-           
+
 
             bool isSuccess = NhanvienDAO.ChuyenNhanSu(maNhanVien, maBoPhanMoi, maChiNhanhMoi, ngayBatDau, ngayKetThuc);
 
@@ -232,7 +232,7 @@ namespace QuanLySuShi
                     {
                         LoadDanhSachThucDon(); // Load tất cả nếu không có từ khóa
                     }
-                    
+
                     ClearInputs();
                     LoadDataThucDon();
                     // Clear các textbox
@@ -248,7 +248,7 @@ namespace QuanLySuShi
 
         private void btnXoaThucDon_Click(object sender, EventArgs e)
         {
-            try 
+            try
             {
                 // Kiểm tra xem đã chọn dòng nào chưa
                 if (dataGridView5.CurrentRow == null || dataGridView5.CurrentRow.Index < 0)
@@ -259,7 +259,7 @@ namespace QuanLySuShi
 
                 // Lấy mã thực đơn từ dòng được chọn
                 string maThucDon = dataGridView5.CurrentRow.Cells["MaThucDon"].Value?.ToString();
-                
+
                 if (string.IsNullOrEmpty(maThucDon))
                 {
                     MessageBox.Show("Không tìm thấy mã thực đơn!");
@@ -290,7 +290,7 @@ namespace QuanLySuShi
                         {
                             LoadDanhSachThucDon(); // Load tất cả nếu không có từ khóa
                         }
-                        
+
                         ClearInputs();
                     }
                     else
@@ -310,7 +310,7 @@ namespace QuanLySuShi
             try
             {
                 if (string.IsNullOrWhiteSpace(textBox14?.Text) ||
-                    string.IsNullOrWhiteSpace(textBox13?.Text) || 
+                    string.IsNullOrWhiteSpace(textBox13?.Text) ||
                     string.IsNullOrWhiteSpace(textBox12?.Text))
                 {
                     MessageBox.Show("Vui lòng chọn thực đơn cần sửa và nhập đầy đủ thông tin!");
@@ -327,7 +327,7 @@ namespace QuanLySuShi
                 if (ThucDonDAO.UpdateThucDon(thucDon))
                 {
                     MessageBox.Show("Cập nhật thực đơn thành công!");
-                    
+
                     // Nếu đang có từ khóa tìm kiếm thì load lại kết quả tìm kiếm
                     string tuKhoa = textBox15?.Text?.Trim() ?? string.Empty;
                     if (!string.IsNullOrEmpty(tuKhoa))
@@ -339,7 +339,7 @@ namespace QuanLySuShi
                     {
                         LoadDanhSachThucDon(); // Load tất cả nếu không có từ khóa
                     }
-                    
+
                     ClearInputs();
                 }
                 else
@@ -355,10 +355,10 @@ namespace QuanLySuShi
 
         private void btnTimThucDon_Click(object sender, EventArgs e)
         {
-            try 
+            try
             {
                 string tuKhoa = textBox15.Text.Trim();
-                
+
                 if (string.IsNullOrEmpty(tuKhoa))
                 {
                     MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm!");
@@ -366,7 +366,7 @@ namespace QuanLySuShi
                 }
 
                 var ketQua = ThucDonDAO.SearchThucDon(tuKhoa);
-                
+
                 if (ketQua != null && ketQua.Any())
                 {
                     dataGridView5.DataSource = ketQua;
@@ -421,10 +421,10 @@ namespace QuanLySuShi
 
         private void btnTimKiem_Click(object sender, EventArgs e)
         {
-            try 
+            try
             {
                 string tuKhoa = txtTimKiem.Text.Trim();
-                
+
                 if (string.IsNullOrEmpty(tuKhoa))
                 {
                     MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm!");
@@ -433,7 +433,7 @@ namespace QuanLySuShi
 
                 tuKhoa = "%" + tuKhoa + "%";
                 var ketQua = ThucDonDAO.SearchThucDon(tuKhoa);
-                
+
                 if (ketQua != null && ketQua.Any())
                 {
                     dgvThucDon.DataSource = ketQua;
@@ -455,7 +455,7 @@ namespace QuanLySuShi
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView5.Rows[e.RowIndex];
-                
+
                 textBox14.Text = row.Cells["MaThucDon"].Value?.ToString();
                 textBox13.Text = row.Cells["TenThucDon"].Value?.ToString();
                 textBox12.Text = row.Cells["KhuVuc"].Value?.ToString();
@@ -494,6 +494,105 @@ namespace QuanLySuShi
             var danhSachThucDon = ThucDonDAO.GetAllThucDon();
             dgvThucDon.DataSource = null;
             dgvThucDon.DataSource = danhSachThucDon;
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            string maMuc = MucDAO.GenerateNewMaMuc();
+            textBox18.Text = maMuc;
+
+            string maThucDon = textBox16.Text;
+            //var thucDonExists = ThucDonDAO.GetAllThucDon().Any(td => td.MaThucDon == maThucDon);
+
+            //if (!thucDonExists)
+            //{
+            //    MessageBox.Show("Mã thực đơn không tồn tại. Vui lòng kiểm tra lại.");
+            //    return;
+            //}
+            Muc muc = new Muc(maMuc, textBox17.Text, maThucDon);
+            if (MucDAO.AddMuc(muc))
+            {
+                MessageBox.Show("Thêm mục thành công!");
+                LoadMuc();
+            }
+            else
+            {
+                MessageBox.Show("Thêm mục thất bại!");
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            string maMuc = textBox18.Text;
+            if (MucDAO.DeleteMuc(maMuc))
+            {
+                MessageBox.Show("Xóa mục thành công!");
+                LoadMuc();
+            }
+            else
+            {
+                MessageBox.Show("Xóa mục thất bại!");
+            }
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            Muc muc = new Muc(textBox18.Text, textBox17.Text, textBox16.Text);
+            if (MucDAO.UpdateMuc(muc))
+            {
+                MessageBox.Show("Cập nhật mục thành công!");
+                LoadMuc();
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật mục thất bại!");
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            LoadMuc();
+        }
+
+        private void LoadMuc()
+        {
+            var mucs = MucDAO.GetMucs();
+            dataGridView6.DataSource = mucs;
+        }
+        private void button18_Click(object sender, EventArgs e)
+        {
+            string tuKhoa = textBox19.Text.Trim();
+            if (!string.IsNullOrEmpty(tuKhoa))
+            {
+                SearchMuc(tuKhoa);
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm.");
+            }
+        }
+        private void SearchMuc(string tuKhoa)
+        {
+            var ketQua = MucDAO.SearchMuc(tuKhoa);
+            dataGridView6.DataSource = ketQua;
+        }
+
+        private void dataGridView6_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView6.Rows[e.RowIndex];
+
+                textBox18.Text = row.Cells["MaMuc"].Value?.ToString();
+                textBox17.Text = row.Cells["TenMuc"].Value?.ToString();
+                textBox16.Text = row.Cells["MaThucDon"].Value?.ToString();
+                SetInputState(true);
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

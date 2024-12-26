@@ -110,6 +110,8 @@
             tbtongdanhthu = new TextBox();
             dtgvDoanhthu = new DataGridView();
             tabPage2 = new TabPage();
+            dtpcnsTo = new DateTimePicker();
+            dtpcnsfrom = new DateTimePicker();
             dtgvcns = new DataGridView();
             panel8 = new Panel();
             cbbchuyenbophancns = new ComboBox();
@@ -134,6 +136,8 @@
             btTimkiem = new Button();
             label5 = new Label();
             label6 = new Label();
+            label40 = new Label();
+            label39 = new Label();
             tabPage1 = new TabPage();
             panel6 = new Panel();
             textBox26 = new TextBox();
@@ -158,10 +162,6 @@
             button2 = new Button();
             button1 = new Button();
             tabControl1 = new TabControl();
-            dtpcnsfrom = new DateTimePicker();
-            dtpcnsTo = new DateTimePicker();
-            label39 = new Label();
-            label40 = new Label();
             dgvThucDon = new DataGridView();
             txtMaThucDon = new TextBox();
             txtTenThucDon = new TextBox();
@@ -174,10 +174,6 @@
             btnXoa = new Button();
             btnSua = new Button();
             btnTimKiem = new Button();
-            textBox14.ReadOnly = true;
-            textBox13.ReadOnly = false;
-            textBox12.ReadOnly = false;
-            dataGridView5.CellClick += new DataGridViewCellEventHandler(dataGridView5_CellClick);
             tabPage7.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -210,6 +206,7 @@
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             tabControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvThucDon).BeginInit();
             SuspendLayout();
             // 
             // tabPage7
@@ -450,8 +447,9 @@
             button14.Name = "button14";
             button14.Size = new Size(94, 42);
             button14.TabIndex = 4;
-            button14.Text = "Sửa";
+            button14.Text = "Danh sách";
             button14.UseVisualStyleBackColor = true;
+            button14.Click += button14_Click;
             // 
             // button15
             // 
@@ -461,6 +459,7 @@
             button15.TabIndex = 3;
             button15.Text = "Sửa";
             button15.UseVisualStyleBackColor = true;
+            button15.Click += button15_Click;
             // 
             // button16
             // 
@@ -470,6 +469,7 @@
             button16.TabIndex = 3;
             button16.Text = "Xoá";
             button16.UseVisualStyleBackColor = true;
+            button16.Click += button16_Click;
             // 
             // button17
             // 
@@ -479,7 +479,7 @@
             button17.TabIndex = 0;
             button17.Text = "Thêm";
             button17.UseVisualStyleBackColor = true;
-            button17.Click += new System.EventHandler(this.btnThem_Click);
+            button17.Click += button17_Click;
             // 
             // dataGridView6
             // 
@@ -489,6 +489,7 @@
             dataGridView6.RowHeadersWidth = 51;
             dataGridView6.Size = new Size(392, 323);
             dataGridView6.TabIndex = 8;
+            dataGridView6.CellClick += dataGridView6_CellClick;
             // 
             // panel15
             // 
@@ -515,9 +516,9 @@
             label14.AutoSize = true;
             label14.Location = new Point(12, 94);
             label14.Name = "label14";
-            label14.Size = new Size(71, 20);
+            label14.Size = new Size(93, 20);
             label14.TabIndex = 3;
-            label14.Text = "Thực đơn";
+            label14.Text = "Mã thực đơn";
             // 
             // textBox17
             // 
@@ -538,7 +539,7 @@
             // textBox18
             // 
             textBox18.Location = new Point(114, 21);
-            textBox18.Name = "txtMaThucDon";
+            textBox18.Name = "textBox18";
             textBox18.ReadOnly = true;
             textBox18.Size = new Size(237, 27);
             textBox18.TabIndex = 4;
@@ -576,7 +577,7 @@
             button18.TabIndex = 4;
             button18.Text = "Tìm";
             button18.UseVisualStyleBackColor = true;
-            button18.Click += new EventHandler(btnTimKiem_Click);
+            button18.Click += button18_Click;
             // 
             // tabPage5
             // 
@@ -606,32 +607,32 @@
             // button11
             // 
             button11.Location = new Point(301, 1);
-            button11.Name = "btnThem";
+            button11.Name = "button11";
             button11.Size = new Size(94, 42);
             button11.TabIndex = 4;
             button11.Text = "Thêm";
             button11.UseVisualStyleBackColor = true;
-            button11.Click += new System.EventHandler(this.btnThem_Click);
+            button11.Click += btnThem_Click;
             // 
             // button10
             // 
             button10.Location = new Point(203, 0);
-            button10.Name = "btnXoa";
+            button10.Name = "button10";
             button10.Size = new Size(94, 42);
             button10.TabIndex = 3;
             button10.Text = "Xóa";
             button10.UseVisualStyleBackColor = true;
-            button10.Click += new EventHandler(btnXoaThucDon_Click);
+            button10.Click += btnXoaThucDon_Click;
             // 
             // button9
             // 
             button9.Location = new Point(103, 0);
-            button9.Name = "btnSua";
+            button9.Name = "button9";
             button9.Size = new Size(94, 42);
             button9.TabIndex = 3;
             button9.Text = "Sửa";
             button9.UseVisualStyleBackColor = true;
-            button9.Click += new EventHandler(btnSuaThucDon_Click);
+            button9.Click += btnSuaThucDon_Click;
             // 
             // button12
             // 
@@ -646,10 +647,11 @@
             // 
             dataGridView5.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView5.Location = new Point(13, 75);
-            dataGridView5.Name = "dgvThucDon";
+            dataGridView5.Name = "dataGridView5";
             dataGridView5.RowHeadersWidth = 51;
             dataGridView5.Size = new Size(392, 323);
             dataGridView5.TabIndex = 4;
+            dataGridView5.CellClick += dataGridView5_CellClick;
             // 
             // panel12
             // 
@@ -667,7 +669,7 @@
             // textBox12
             // 
             textBox12.Location = new Point(114, 87);
-            textBox12.Name = "txtMaThucDon";
+            textBox12.Name = "textBox12";
             textBox12.ReadOnly = true;
             textBox12.Size = new Size(237, 27);
             textBox12.TabIndex = 4;
@@ -684,8 +686,7 @@
             // textBox13
             // 
             textBox13.Location = new Point(114, 54);
-            textBox13.Name = "txtTenThucDon";
-            textBox13.ReadOnly = false;
+            textBox13.Name = "textBox13";
             textBox13.Size = new Size(237, 27);
             textBox13.TabIndex = 4;
             // 
@@ -701,7 +702,7 @@
             // textBox14
             // 
             textBox14.Location = new Point(114, 21);
-            textBox14.Name = "txtKhuVuc";
+            textBox14.Name = "textBox14";
             textBox14.ReadOnly = true;
             textBox14.Size = new Size(237, 27);
             textBox14.TabIndex = 4;
@@ -739,7 +740,7 @@
             button13.TabIndex = 4;
             button13.Text = "Tìm";
             button13.UseVisualStyleBackColor = true;
-            button13.Click += new EventHandler(btnTimThucDon_Click);
+            button13.Click += btnTimThucDon_Click;
             // 
             // tabPage4
             // 
@@ -998,6 +999,20 @@
             tabPage2.Text = "Chuyển nhân sự";
             tabPage2.UseVisualStyleBackColor = true;
             // 
+            // dtpcnsTo
+            // 
+            dtpcnsTo.Location = new Point(276, 372);
+            dtpcnsTo.Name = "dtpcnsTo";
+            dtpcnsTo.Size = new Size(250, 27);
+            dtpcnsTo.TabIndex = 58;
+            // 
+            // dtpcnsfrom
+            // 
+            dtpcnsfrom.Location = new Point(10, 372);
+            dtpcnsfrom.Name = "dtpcnsfrom";
+            dtpcnsfrom.Size = new Size(250, 27);
+            dtpcnsfrom.TabIndex = 58;
+            // 
             // dtgvcns
             // 
             dtgvcns.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -1206,7 +1221,7 @@
             btTimkiem.TabIndex = 50;
             btTimkiem.Text = "Tìm kiếm";
             btTimkiem.UseVisualStyleBackColor = true;
-            btTimkiem.Click += new EventHandler(btnTimKiem_Click);
+            btTimkiem.Click += btnTimKiem_Click;
             // 
             // label5
             // 
@@ -1225,6 +1240,24 @@
             label6.Size = new Size(74, 20);
             label6.TabIndex = 49;
             label6.Text = "Chi nhánh";
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Location = new Point(276, 349);
+            label40.Name = "label40";
+            label40.Size = new Size(104, 20);
+            label40.TabIndex = 3;
+            label40.Text = "Ngày kết thúc ";
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Location = new Point(10, 349);
+            label39.Name = "label39";
+            label39.Size = new Size(99, 20);
+            label39.TabIndex = 3;
+            label39.Text = "Ngày bắt đầu";
             // 
             // tabPage1
             // 
@@ -1286,7 +1319,7 @@
             label4.Name = "label4";
             label4.Size = new Size(71, 20);
             label4.TabIndex = 3;
-            label4.Text = "Thực đơn";
+            label4.Text = "Mã thực đơn";
             // 
             // label3
             // 
@@ -1295,7 +1328,7 @@
             label3.Name = "label3";
             label3.Size = new Size(37, 20);
             label3.TabIndex = 3;
-            label3.Text = "Mục";
+            label3.Text = "Mã mục";
             // 
             // label2
             // 
@@ -1409,8 +1442,9 @@
             button5.Name = "button5";
             button5.Size = new Size(94, 42);
             button5.TabIndex = 4;
-            button5.Text = "Sửa";
+            button5.Text = "Danh sách";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // button3
             // 
@@ -1454,43 +1488,12 @@
             tabControl1.Size = new Size(799, 438);
             tabControl1.TabIndex = 0;
             // 
-            // dtpcnsfrom
-            // 
-            dtpcnsfrom.Location = new Point(10, 372);
-            dtpcnsfrom.Name = "dtpcnsfrom";
-            dtpcnsfrom.Size = new Size(250, 27);
-            dtpcnsfrom.TabIndex = 58;
-            // 
-            // dtpcnsTo
-            // 
-            dtpcnsTo.Location = new Point(276, 372);
-            dtpcnsTo.Name = "dtpcnsTo";
-            dtpcnsTo.Size = new Size(250, 27);
-            dtpcnsTo.TabIndex = 58;
-            // 
-            // label39
-            // 
-            label39.AutoSize = true;
-            label39.Location = new Point(10, 349);
-            label39.Name = "label39";
-            label39.Size = new Size(99, 20);
-            label39.TabIndex = 3;
-            label39.Text = "Ngày bắt đầu";
-            // 
-            // label40
-            // 
-            label40.AutoSize = true;
-            label40.Location = new Point(276, 349);
-            label40.Name = "label40";
-            label40.Size = new Size(104, 20);
-            label40.TabIndex = 3;
-            label40.Text = "Ngày kết thúc ";
-            // 
             // dgvThucDon
             // 
             dgvThucDon.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvThucDon.Location = new Point(20, 100);
             dgvThucDon.Name = "dgvThucDon";
+            dgvThucDon.RowHeadersWidth = 51;
             dgvThucDon.Size = new Size(600, 300);
             dgvThucDon.TabIndex = 0;
             // 
@@ -1498,25 +1501,29 @@
             // 
             txtMaThucDon.Location = new Point(120, 20);
             txtMaThucDon.Name = "txtMaThucDon";
-            txtMaThucDon.Size = new Size(200, 25);
+            txtMaThucDon.Size = new Size(200, 27);
+            txtMaThucDon.TabIndex = 0;
             // 
             // txtTenThucDon
             // 
             txtTenThucDon.Location = new Point(120, 50);
             txtTenThucDon.Name = "txtTenThucDon";
-            txtTenThucDon.Size = new Size(200, 25);
+            txtTenThucDon.Size = new Size(200, 27);
+            txtTenThucDon.TabIndex = 0;
             // 
             // txtKhuVuc
             // 
             txtKhuVuc.Location = new Point(120, 80);
             txtKhuVuc.Name = "txtKhuVuc";
-            txtKhuVuc.Size = new Size(200, 25);
+            txtKhuVuc.Size = new Size(200, 27);
+            txtKhuVuc.TabIndex = 0;
             // 
             // txtTimKiem
             // 
             txtTimKiem.Location = new Point(420, 20);
             txtTimKiem.Name = "txtTimKiem";
-            txtTimKiem.Size = new Size(200, 25);
+            txtTimKiem.Size = new Size(200, 27);
+            txtTimKiem.TabIndex = 0;
             // 
             // lblMaThucDon
             // 
@@ -1553,7 +1560,7 @@
             btnThem.TabIndex = 0;
             btnThem.Text = "Thêm";
             btnThem.UseVisualStyleBackColor = true;
-            btnThem.Click += new System.EventHandler(this.btnThem_Click);
+            btnThem.Click += btnThem_Click;
             // 
             // btnXoa
             // 
@@ -1563,7 +1570,7 @@
             btnXoa.TabIndex = 0;
             btnXoa.Text = "Xóa";
             btnXoa.UseVisualStyleBackColor = true;
-            btnXoa.Click += new EventHandler(btnXoaThucDon_Click);
+            btnXoa.Click += btnXoaThucDon_Click;
             // 
             // btnSua
             // 
@@ -1573,7 +1580,7 @@
             btnSua.TabIndex = 0;
             btnSua.Text = "Sửa";
             btnSua.UseVisualStyleBackColor = true;
-            btnSua.Click += new EventHandler(btnSuaThucDon_Click);
+            btnSua.Click += btnSuaThucDon_Click;
             // 
             // btnTimKiem
             // 
@@ -1583,7 +1590,7 @@
             btnTimKiem.TabIndex = 0;
             btnTimKiem.Text = "Tìm kiếm";
             btnTimKiem.UseVisualStyleBackColor = true;
-            btnTimKiem.Click += new EventHandler(btnTimKiem_Click);
+            btnTimKiem.Click += btnTimKiem_Click;
             // 
             // adminfm
             // 
@@ -1639,6 +1646,7 @@
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvThucDon).EndInit();
             ResumeLayout(false);
         }
 
@@ -1790,5 +1798,6 @@
         private Button btnXoa;
         private Button btnSua;
         private Button btnTimKiem;
+
     }
 }

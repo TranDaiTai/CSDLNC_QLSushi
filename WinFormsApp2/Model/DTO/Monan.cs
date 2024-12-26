@@ -59,5 +59,17 @@ namespace QuanLySuShi.Model.DTO
             HoTroGiao = Convert.ToBoolean(row.Cells["HoTroGiao"].Value);
             MaMuc = row.Cells["MaMuc"].Value.ToString();
         }
+
+        // Phương thức thêm món ăn
+        public void AddDish()
+        {
+            MonAnDAO.AddDish(this);
+        }
+
+        // Phương thức cập nhật món ăn
+        public void UpdateDish()
+        {
+            MonAnDAO.UpdateDish(this);
+        }
     }
 }
