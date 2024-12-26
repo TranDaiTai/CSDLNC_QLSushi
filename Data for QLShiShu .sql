@@ -75,11 +75,11 @@ VALUES
 GO
 
 -- Thêm dữ liệu vào bảng MonAn
-INSERT INTO MonAn (MaMonAn, TenMonAn, GiaTien, HoTroGiao, MaMuc)
+INSERT INTO MonAn (MaMonAn, TenMonAn, GiaTien, MaMuc, MaThucDon)
 VALUES
-('MA01', N'Cơm tấm', 50000, 1, 'M01'),
-('MA02', N'Gà xối mỡ', 70000, 1, 'M01'),
-('MA03', N'Gỏi cuốn', 30000, 1, 'M02');
+('MA01', N'Cơm tấm', 50000, 'M01', 'TD01'),
+('MA02', N'Gà xối mỡ', 70000, 'M01', 'TD01'),
+('MA03', N'Gỏi cuốn', 30000, 'M02', 'TD02');
 
 GO
 

@@ -671,3 +671,12 @@ BEGIN
     OR LOWER(TenMuc) COLLATE Latin1_General_CI_AI LIKE LOWER(N'%' + @TuKhoa + '%');
 END
 GO
+
+CREATE PROCEDURE sp_SearchMonAn
+    @TuKhoa NVARCHAR(100)
+AS
+BEGIN
+    SELECT * FROM MonAn
+    WHERE TenMonAn LIKE '%' + @TuKhoa + '%'
+END
+GO

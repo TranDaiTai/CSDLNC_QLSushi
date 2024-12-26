@@ -175,8 +175,9 @@ create table MonAn(
 	MaMonAn char(10),
 	TenMonAn nvarchar(50) not null,
 	GiaTien money not null,
-	HoTroGiao bit not null,
-	MaMuc char(10) not null , 
+	--HoTroGiao bit not null,
+	MaMuc char(10) not null,
+	MaThucDon char(10) not null,
 	primary key (MaMonAn)
 
 );
@@ -203,8 +204,8 @@ CREATE TABLE ChiTietPhieuDat (
 ALTER TABLE MonAn
 ADD CONSTRAINT CK_MonAn_GiaTien CHECK (GiaTien >= 0);
 
-ALTER TABLE MonAn
-ADD CONSTRAINT CK_MonAn_HoTroGiao CHECK (HoTroGiao IN (0, 1));
+--ALTER TABLE MonAn
+--ADD CONSTRAINT CK_MonAn_HoTroGiao CHECK (HoTroGiao IN (0, 1));
 
 
 alter table ChiTietPhieuDat 

@@ -8,20 +8,22 @@ namespace QuanLySuShi.Model.DTO
         public string MaMonAn { get; set; }  // Mã món ăn
         public string TenMonAn { get; set; } // Tên món ăn
         public decimal GiaTien { get; set; } // Giá tiền
-        public bool HoTroGiao { get; set; }  // Hỗ trợ giao
+        //public bool HoTroGiao { get; set; }  // Hỗ trợ giao
         public string MaMuc { get; set; }    // Mã mức (Liên kết với bảng mức nếu có)
+        public string MaThucDon { get; set; } // Mã thực đơn
 
         // Constructor mặc định
         public MonAn() { }
 
         // Constructor có tham số để khởi tạo từ dữ liệu
-        public MonAn(string maMonAn, string tenMonAn, decimal giaTien, bool hoTroGiao, string maMuc)
+        public MonAn(string maMonAn, string tenMonAn, decimal giaTien, /*bool hoTroGiao*/ string maMuc, string maThucDon)
         {
             MaMonAn = maMonAn;
             TenMonAn = tenMonAn;
             GiaTien = giaTien;
-            HoTroGiao = hoTroGiao;
+            //HoTroGiao = hoTroGiao;
             MaMuc = maMuc;
+            MaThucDon = maThucDon;
         }
 
         // Phương thức khởi tạo từ DataRow (có thể sử dụng để chuyển dữ liệu từ DataTable thành đối tượng)
@@ -30,8 +32,9 @@ namespace QuanLySuShi.Model.DTO
             MaMonAn = row["MaMonAn"].ToString();
             TenMonAn = row["TenMonAn"].ToString();
             GiaTien = Convert.ToDecimal(row["GiaTien"]);
-            HoTroGiao = Convert.ToBoolean(row["HoTroGiao"]);
+            //HoTroGiao = Convert.ToBoolean(row["HoTroGiao"]);
             MaMuc = row["MaMuc"].ToString();
+            MaThucDon = row["MaThucDon"].ToString();
         }
         public static void LoadMonAnByMuc(ComboBox cbbmuc, ComboBox cbbmonan)
         {
@@ -56,20 +59,9 @@ namespace QuanLySuShi.Model.DTO
             MaMonAn = row.Cells["MaMonAn"].Value.ToString();
             TenMonAn = row.Cells["TenMonAn"].Value.ToString();
             GiaTien = Convert.ToDecimal(row.Cells["GiaTien"].Value);
-            HoTroGiao = Convert.ToBoolean(row.Cells["HoTroGiao"].Value);
+            //HoTroGiao = Convert.ToBoolean(row.Cells["HoTroGiao"].Value);
             MaMuc = row.Cells["MaMuc"].Value.ToString();
-        }
-
-        // Phương thức thêm món ăn
-        public void AddDish()
-        {
-            MonAnDAO.AddDish(this);
-        }
-
-        // Phương thức cập nhật món ăn
-        public void UpdateDish()
-        {
-            MonAnDAO.UpdateDish(this);
+            MaThucDon = row.Cells["MaThucDon"].Value.ToString();
         }
     }
 }

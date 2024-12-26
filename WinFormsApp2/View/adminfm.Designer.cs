@@ -142,7 +142,7 @@
             panel6 = new Panel();
             textBox26 = new TextBox();
             comboBox1 = new ComboBox();
-            textBox5 = new TextBox();
+            cbbThucDon = new ComboBox();
             label4 = new Label();
             label3 = new Label();
             label2 = new Label();
@@ -1277,7 +1277,7 @@
             // 
             panel6.Controls.Add(textBox26);
             panel6.Controls.Add(comboBox1);
-            panel6.Controls.Add(textBox5);
+            panel6.Controls.Add(cbbThucDon);
             panel6.Controls.Add(label4);
             panel6.Controls.Add(label3);
             panel6.Controls.Add(label2);
@@ -1304,13 +1304,14 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(262, 28);
             comboBox1.TabIndex = 5;
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
-            // textBox5
+            // cbbThucDon
             // 
-            textBox5.Location = new Point(89, 153);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(262, 27);
-            textBox5.TabIndex = 4;
+            cbbThucDon.Location = new Point(89, 153);
+            cbbThucDon.Name = "cbbThucDon";
+            cbbThucDon.Size = new Size(262, 28);
+            cbbThucDon.TabIndex = 4;
             // 
             // label4
             // 
@@ -1319,14 +1320,14 @@
             label4.Name = "label4";
             label4.Size = new Size(71, 20);
             label4.TabIndex = 3;
-            label4.Text = "Mã thực đơn";
+            label4.Text = "Thực đơn";
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Location = new Point(12, 127);
             label3.Name = "label3";
-            label3.Size = new Size(37, 20);
+            label3.Size = new Size(62, 20);
             label3.TabIndex = 3;
             label3.Text = "Mã mục";
             // 
@@ -1389,7 +1390,7 @@
             dtgmonan.RowHeadersWidth = 51;
             dtgmonan.Size = new Size(392, 323);
             dtgmonan.TabIndex = 1;
-            dtgmonan.CellContentClick += dataGridView3_CellContentClick;
+            dtgmonan.CellClick += dtgmonan_CellClick;
             // 
             // dataGridView2
             // 
@@ -1424,6 +1425,7 @@
             button4.TabIndex = 4;
             button4.Text = "Tìm";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // panel3
             // 
@@ -1454,6 +1456,7 @@
             button3.TabIndex = 3;
             button3.Text = "Sửa";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // button2
             // 
@@ -1463,6 +1466,7 @@
             button2.TabIndex = 3;
             button2.Text = "Xoá";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -1472,6 +1476,7 @@
             button1.TabIndex = 0;
             button1.Text = "Thêm";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // tabControl1
             // 
@@ -1744,7 +1749,7 @@
         private Panel panel6;
         private TextBox textBox26;
         private ComboBox comboBox1;
-        private TextBox textBox5;
+        private ComboBox cbbThucDon;
         private Label label4;
         private Label label3;
         private Label label2;

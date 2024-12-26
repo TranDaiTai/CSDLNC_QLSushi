@@ -47,11 +47,6 @@ namespace QuanLySuShi
             tbtongdanhthu.Text = tongtien.ToString("c", new CultureInfo("vi-VN"));
         }
 
-        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
@@ -592,7 +587,116 @@ namespace QuanLySuShi
 
         private void button5_Click(object sender, EventArgs e)
         {
+            var monAns = MonAnDAO.GetMonAn();
+            if (monAns != null && monAns.Count > 0)
+            {
+                dtgmonan.DataSource = monAns;
+            }
+            LoadMonAn();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MonAn monAn = new MonAn
+            {
+                MaMonAn = MonAnDAO.GenerateNewMaMonAn(), // Tạo mã món mới
+                TenMonAn = textBox2.Text,
+                GiaTien = decimal.Parse(textBox26.Text),
+                MaMuc = comboBox1.SelectedValue.ToString(),
+                MaThucDon = cbbThucDon.SelectedValue.ToString()
+            };
+
+            if (MonAnDAO.AddMonAn(monAn)) // Thêm món ăn vào cơ sở dữ liệu
+            {
+                MessageBox.Show("Thêm món ăn thành công!");
+                LoadMonAn(); // Tải lại danh sách món ăn
+            }
+            else
+            {
+                MessageBox.Show("Thêm món ăn thất bại!");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string maMonAn = tbtaikhoan.Text; // Lấy mã món từ TextBox
+            if (MonAnDAO.DeleteMonAn(maMonAn)) // Xóa món ăn
+            {
+                MessageBox.Show("Xóa món ăn thành công!");
+                LoadMonAn(); // Tải lại danh sách món ăn
+            }
+            else
+            {
+                MessageBox.Show("Xóa món ăn thất bại!");
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MonAn monAn = new MonAn
+            {
+                MaMonAn = tbtaikhoan.Text,
+                TenMonAn = textBox2.Text,
+                GiaTien = decimal.Parse(textBox26.Text),
+                MaMuc = comboBox1.SelectedValue.ToString(),
+                MaThucDon = cbbThucDon.SelectedValue.ToString()
+            };
+
+            if (MonAnDAO.UpdateMonAn(monAn)) // Cập nhật món ăn
+            {
+                MessageBox.Show("Cập nhật món ăn thành công!");
+                LoadMonAn(); // Tải lại danh sách món ăn
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật món ăn thất bại!");
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string tuKhoa = textBox1.Text.Trim();
+            if (!string.IsNullOrEmpty(tuKhoa))
+            {
+                SearchMonAn(tuKhoa);
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm.");
+            }
+        }
+
+        private void LoadMonAn()
+        {
+            var monAns = MonAnDAO.GetMonAn();
+            dtgmonan.DataSource = monAns;
+        }
+
+        private void SearchMonAn(string tuKhoa)
+        {
+            var ketQua = MonAnDAO.SearchMonAn(tuKhoa);
+            dtgmonan.DataSource = ketQua;
+        }
+
+        private void dtgmonan_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dtgmonan.Rows[e.RowIndex];
+
+                tbtaikhoan.Text = row.Cells["MaMonAn"].Value?.ToString();
+                textBox2.Text = row.Cells["TenMonAn"].Value?.ToString();
+                textBox26.Text = row.Cells["Gia"].Value?.ToString();
+                comboBox1.SelectedValue = row.Cells["MaMuc"].Value?.ToString();
+                cbbThucDon.SelectedValue = row.Cells["MaThucDon"].Value?.ToString();
+                SetInputState(true);
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
+
     }
 }

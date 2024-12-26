@@ -51,38 +51,108 @@ namespace QuanLySuShi.Controller.DAO
             return DataProvider.ExecuteSelectQuery(query, parameters);
         }
 
-        public static void AddDish(MonAn dish)
+        public static bool AddMonAn(MonAn monAn)
         {
-            string query = "INSERT INTO MonAn (TenMonAn, GiaTien) VALUES (@TenMonAn, @GiaTien)";
-            Dictionary<string, object> parameters = new Dictionary<string, object>
+            string query = "INSERT INTO MonAn (MaMon, TenMon, Gia, MaMuc, MaThucDon) VALUES (@MaMon, @TenMon, @Gia, @MaMuc, @MaThucDon)";
+            using (SqlConnection conn = new SqlConnection(DataProvider.GetConnectionString()))
             {
-                { "@TenMonAn", dish.TenMonAn },
-                { "@GiaTien", dish.GiaTien }
-            };
-            DataProvider.ExecuteNonQuery(query, parameters);
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaMon", monAn.MaMonAn);
+                    cmd.Parameters.AddWithValue("@TenMon", monAn.TenMonAn);
+                    cmd.Parameters.AddWithValue("@Gia", monAn.GiaTien);
+                    cmd.Parameters.AddWithValue("@MaMuc", monAn.MaMuc);
+                    cmd.Parameters.AddWithValue("@MaThucDon", monAn.MaThucDon);
+                    return cmd.ExecuteNonQuery() > 0; // Trả về true nếu thêm thành công
+                }
+            }
         }
 
-        public static void UpdateDish(MonAn dish)
+        public static bool UpdateMonAn(MonAn monAn)
         {
-            string query = "UPDATE MonAn SET TenMonAn = @TenMonAn, GiaTien = @GiaTien WHERE MaMonAn = @MaMonAn";
-            Dictionary<string, object> parameters = new Dictionary<string, object>
+            string query = "UPDATE MonAn SET TenMon = @TenMon, Gia = @Gia, MaMuc = @MaMuc, MaThucDon = @MaThucDon WHERE MaMon = @MaMon";
+            using (SqlConnection conn = new SqlConnection(DataProvider.GetConnectionString()))
             {
-                { "@TenMonAn", dish.TenMonAn },
-                { "@GiaTien", dish.GiaTien },
-                { "@MaMonAn", dish.MaMonAn }
-            };
-            DataProvider.ExecuteNonQuery(query, parameters);
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaMon", monAn.MaMonAn);
+                    cmd.Parameters.AddWithValue("@TenMon", monAn.TenMonAn);
+                    cmd.Parameters.AddWithValue("@Gia", monAn.GiaTien);
+                    cmd.Parameters.AddWithValue("@MaMuc", monAn.MaMuc);
+                    cmd.Parameters.AddWithValue("@MaThucDon", monAn.MaThucDon);
+                    return cmd.ExecuteNonQuery() > 0; // Trả về true nếu cập nhật thành công
+                }
+            }
         }
 
-        public static void DeleteDish(string maMonAn)
+        public static bool DeleteMonAn(string maMon)
         {
-            string query = "DELETE FROM MonAn WHERE MaMonAn = @MaMonAn";
-            Dictionary<string, object> parameters = new Dictionary<string, object>
+            string query = "DELETE FROM MonAn WHERE MaMon = @MaMon";
+            using (SqlConnection conn = new SqlConnection(DataProvider.GetConnectionString()))
             {
-                { "@MaMonAn", maMonAn }
-            };
-            DataProvider.ExecuteNonQuery(query, parameters);
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaMon", maMon);
+                    return cmd.ExecuteNonQuery() > 0; // Trả về true nếu xóa thành công
+                }
+            }
         }
 
+        public static string GenerateNewMaMonAn()
+        {
+            string newMaMonAn = "MA01"; 
+            string query = "SELECT MAX(MaMonAn) FROM MonAn"; 
+
+            using (SqlConnection conn = new SqlConnection(DataProvider.GetConnectionString()))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    var result = cmd.ExecuteScalar();
+                    if (result != DBNull.Value)
+                    {
+                        string maxMaMonAn = result.ToString();
+                        int nextId = int.Parse(maxMaMonAn.Substring(2)) + 1; 
+                        newMaMonAn = "MA" + nextId.ToString("D2"); 
+                    }
+                }
+            }
+            return newMaMonAn;
+        }
+        public static List<MonAn> SearchMonAn(string tuKhoa)
+        {
+            List<MonAn> ketQua = new List<MonAn>();
+            string query = "EXEC sp_SearchMonAn @TuKhoa"; // Giả sử bạn có stored procedure này
+            var parameters = new Dictionary<string, object>
+            {
+                { "@TuKhoa", tuKhoa }
+            };
+
+            try
+            {
+                DataTable data = DataProvider.ExecuteSelectQuery(query, parameters);
+
+                foreach (DataRow row in data.Rows)
+                {
+                    MonAn monAn = new MonAn
+                    {
+                        MaMonAn = row["MaMonAn"].ToString(),
+                        TenMonAn = row["TenMonAn"].ToString(),
+                        GiaTien = Convert.ToDecimal(row["GiaTien"]),
+                        MaMuc = row["MaMuc"].ToString(),
+                        MaThucDon = row["MaThucDon"].ToString(),
+                    };
+                    ketQua.Add(monAn);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tìm kiếm món ăn: {ex.Message}");
+            }
+            return ketQua;
+        }
     }
 }
