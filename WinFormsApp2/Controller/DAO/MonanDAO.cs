@@ -50,6 +50,33 @@ namespace QuanLySuShi.Controller.DAO
 
             return DataProvider.ExecuteSelectQuery(query, parameters);
         }
+        public static List<MonAn> GetMonAn_TheoTuKhoa(string tukhoa = null)
+        {
+            List<MonAn> monans = new List<MonAn>();
+
+            // Câu truy vấn SQL
+            string query = "select * " +
+              "from Monan " +
+              "where Monan.Tenmonan like @tukhoa  ";
+
+            // Tạo tham số cho câu truy vấn
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "@tukhoa", "%" + tukhoa + "%" }
+            };
+
+
+            // Thực hiện truy vấn và lấy dữ liệu
+            DataTable result = DataProvider.ExecuteSelectQuery(query, parameters);
+
+            // Nếu có dữ liệu, chuyển đổi từng dòng thành đối tượng Muc
+            foreach (DataRow row in result.Rows)
+            {
+                MonAn muc = new MonAn(row);
+                monans.Add(muc);
+            }
+            return monans;
+        }
 
 
     }

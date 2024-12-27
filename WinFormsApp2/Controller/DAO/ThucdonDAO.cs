@@ -213,5 +213,31 @@ namespace QuanLySuShi.Controller.DAO
                 return "TD01";
             }
         }
+        public static bool AddPhucVu(string maChiNhanh, string maThucDon)
+        {
+            try
+            {
+                // Câu lệnh SQL chèn trực tiếp
+                string query = "INSERT INTO PhucVu (MaChiNhanh, MaThucDon) VALUES (@MaChiNhanh, @MaThucDon)";
+
+                // Khởi tạo tham số
+                var parameters = new Dictionary<string, object>
+        {
+            { "@MaChiNhanh", maChiNhanh },
+            { "@MaThucDon", maThucDon }
+        };
+
+                // Thực hiện truy vấn
+                return DataProvider.ExecuteNonQuery(query, parameters);
+            }
+            catch (Exception ex)
+            {
+                // Hiển thị thông báo lỗi nếu có
+                MessageBox.Show($"Lỗi khi thêm phục vụ: {ex.Message}");
+                return false;
+            }
+        }
+
+
     }
 }

@@ -23,9 +23,8 @@ namespace QuanLySuShi.Model.DTO
             KhuVuc = string.Empty;
         }
 
-        public static void LoadThucdon(ComboBox? cbbthucdon, string? machinhanh)
+        public static void LoadThucdon(ComboBox? cbbthucdon, string? machinhanh = null )
         {
-            if (cbbthucdon == null || string.IsNullOrEmpty(machinhanh)) return;
             
             var listtd = ThucDonDAO.GetThucDon(machinhanh);
             if (listtd == null) return;

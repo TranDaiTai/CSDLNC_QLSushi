@@ -36,6 +36,33 @@ namespace QuanLySuShi.Controller.DAO
             }
             return mucs;
         }
+        public static List<Muc> GetMucs_TheoTuKhoa(string tukhoa = null)
+        {
+            List<Muc> mucs = new List<Muc>();
+
+            // Câu truy vấn SQL
+            string query = "select * " +
+              "from muc " +
+              "where muc.tenmuc like @tukhoa";
+
+            // Tạo tham số cho câu truy vấn
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "@tukhoa", "%" + tukhoa + "%" }
+            };
+
+
+            // Thực hiện truy vấn và lấy dữ liệu
+            DataTable result = DataProvider.ExecuteSelectQuery(query, parameters);
+
+            // Nếu có dữ liệu, chuyển đổi từng dòng thành đối tượng Muc
+            foreach (DataRow row in result.Rows)
+            {
+                Muc muc = new Muc(row);
+                mucs.Add(muc);
+            }
+            return mucs;
+        }
 
 
     }

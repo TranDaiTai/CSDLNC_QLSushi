@@ -285,6 +285,7 @@ namespace QuanLySuShi
                 listView2.Items.Clear();
                 txtDiaChi.Clear();
                 tbghichu.Clear();
+                mauudai = null; 
                 LoadDonHang();
             }
             else
@@ -303,16 +304,8 @@ namespace QuanLySuShi
 
         }
 
-        private void btDatBan_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
-        }
+   
+        
 
         private void Mainfmkhachhang_Load(object sender, EventArgs e)
         {
@@ -425,7 +418,7 @@ namespace QuanLySuShi
                 MessageBox.Show("Vui lòng chọn chi nhánh!", "Thông báo");
                 return;
             }
-
+           
             // Lấy giá trị từ giao diện
             KhachHang kh = KhachHangDAO.GetKhachHangByMakhachHang(makhach: Dangnhap.user.MaDinhDanh);
 
@@ -485,11 +478,35 @@ namespace QuanLySuShi
 
             if (isTaiQuanCreated)
             {
+                foreach (ListViewItem item in listView2.Items)
+                {
+                    string maMonAn = item.SubItems[0].Text;
+                    int soLuong = int.Parse(item.SubItems[3].Text);
+                    ChitietphieuDAO.AddChitietPhieu(maPhieu, maMonAn, soLuong);
+                }
+
+                // Tính tổng số tiền
+                decimal tongSoTien = ChitietphieuDAO.GetTongSoTienByMaPhieu(maPhieu);
+
+                // Lấy thông tin ưu đãi
+                string maUuDai = mauudai; // Biến này cần được gán trước
+
+                if (string.IsNullOrWhiteSpace(maUuDai))
+                {
+                    MessageBox.Show("Quý khách đang không áp dụng ưu đãi nào.", "Thông báo");
+                    maUuDai = ""; // Hoặc bỏ qua ưu đãi
+                }
+
+                UuDai uuDai = UuDaiDAO.GetUuDaiByMaUuDai(maUuDai);
+
+                // Tạo hóa đơn
+
                 MessageBox.Show("Đặt bàn thành công!", "Thông báo");
                 // Reset giao diện
                 listView2.Items.Clear();
                 txtDiaChi.Clear();
                 tbghichu.Clear();
+                mauudai = null; 
             }
             else
             {
