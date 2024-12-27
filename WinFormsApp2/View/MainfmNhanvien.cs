@@ -468,7 +468,7 @@ namespace QuanLySuShi
                 if (isSuccess)
                 {
                     MessageBox.Show("Đơn đã được xác nhân", "Thông báo");
-
+                    LoadDonHang(); 
                 }
                 else
                 {
@@ -477,6 +477,8 @@ namespace QuanLySuShi
                 }
                 selectDonHang = null;
             }
+            listchitiet_donhang.Items.Clear();
+            
         }
 
         private void MainfmNhanvien_FormClosing(object sender, FormClosingEventArgs e)

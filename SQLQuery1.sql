@@ -595,34 +595,20 @@ CREATE PROCEDURE sp_GenerateNewMaThucDon
     @NewMaThucDon varchar(10) OUTPUT
 AS
 BEGIN
-    SET NOCOUNT ON;
-    
-    BEGIN TRY
-        DECLARE @MaxMa varchar(10)
-        DECLARE @NewNumber int
-        
-        -- Lấy mã thực đơn lớn nhất hiện tại
-        SELECT @MaxMa = MAX(MaThucDon) 
-        FROM ThucDon 
-        WHERE MaThucDon LIKE 'TD%'
-        
-        IF @MaxMa IS NULL
-            SET @NewMaThucDon = 'TD01'
-        ELSE
-        BEGIN
-            -- Lấy số từ mã hiện tại và tăng lên 1
-            SET @NewNumber = CAST(SUBSTRING(@MaxMa, 3, 2) AS int) + 1
-            -- Đảm bảo số mới không vượt quá 99
-            IF @NewNumber > 99
-                THROW 50001, 'Đã đạt đến giới hạn mã thực đơn.', 1;
-            SET @NewMaThucDon = 'TD' + RIGHT('00' + CAST(@NewNumber AS varchar(2)), 2)
-        END
-    END TRY
-    BEGIN CATCH
-        -- Nếu có lỗi, trả về mã mặc định
-        SET @NewMaThucDon = 'TD01'
-        -- Có thể log lỗi ở đây nếu cần
-    END CATCH
+     DECLARE @MaxNum INT;
+    DECLARE @NextPhieu CHAR(10);
+
+    -- Lấy giá trị lớn nhất của phần số trong MaPhieu
+    SELECT @MaxNum= MAX(CAST(SUBSTRING(MaPhieu, 3, LEN(MaPhieu)-2) AS INT))
+    FROM PhieuDatMon
+    WHERE MaPhieu LIKE 'TD%';
+
+    IF @MaxNum IS NOT NULL
+        SET @NextPhieu = 'TD' +CAST(@MaxNum + 1 AS CHAR);
+    ELSE
+        SET @NextPhieu = 'TD001';
+
+    RETURN @NextPhieu;
 END
 go
 

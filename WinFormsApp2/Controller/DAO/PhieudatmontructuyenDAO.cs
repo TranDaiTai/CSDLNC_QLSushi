@@ -29,6 +29,45 @@ namespace QuanLySuShi.Controller.DAO
             // Thực thi stored procedure
             return DataProvider.ExecuteNonQuery(query, parameters);
         }
+        public static bool DeletePhieuDatMonTrucTuyen(string maPhieu)
+        {
+            // Xóa bản ghi trong bảng PhieuDatMonTrucTuyenGiaoDi trước
+            string queryGiaoDi = "DELETE FROM PhieuDatMonTrucTuyenGiaoDi WHERE MaPhieu = @MaPhieu";
+
+            // Xóa bản ghi trong bảng PhieuDatMonTrucTuyenTaiQuan trước
+            string queryTaiQuan = "DELETE FROM PhieuDatMonTrucTuyenTaiQuan WHERE MaPhieu = @MaPhieu";
+
+            // Xóa bản ghi trong bảng PhieuDatMonTrucTuyen
+            string queryTrucTuyen = "DELETE FROM PhieuDatMonTrucTuyen WHERE MaPhieu = @MaPhieu";
+
+            string queryChitiet = "DELETE FROM ChiTietPhieuDat WHERE MaPhieu = @MaPhieu";
+
+            string queryphieu = "DELETE FROM PhieuDatMon WHERE MaPhieu = @MaPhieu";
+
+
+            // Tạo dictionary chứa tham số
+            var parameters = new Dictionary<string, object>
+            {
+                { "@MaPhieu", maPhieu }
+            };
+
+            // Thực thi xóa trong bảng con trước
+            bool giaoDiDeleted = DataProvider.ExecuteNonQuery(queryGiaoDi, parameters);
+            bool taiQuanDeleted = DataProvider.ExecuteNonQuery(queryTaiQuan, parameters);
+            bool phieuchitietDeleted = DataProvider.ExecuteNonQuery(queryChitiet, parameters);
+            bool phieuDeleted = DataProvider.ExecuteNonQuery(queryphieu, parameters);
+
+
+
+
+            // Xóa trong bảng cha sau khi đã xóa hết các bản ghi liên quan trong bảng con
+            if (giaoDiDeleted || taiQuanDeleted|| phieuDeleted|| phieuchitietDeleted)
+            {
+                return DataProvider.ExecuteNonQuery(queryTrucTuyen, parameters);
+            }
+
+            return false; // Nếu không xóa được bảng con, trả về false
+        }
     }
 
     internal class PhieuDatMonGiaoDiDAO : PhieudatmonTrucTuyenDAO
@@ -93,6 +132,6 @@ namespace QuanLySuShi.Controller.DAO
 
             return nextMaBan;
         }
-
+      
     }
 }

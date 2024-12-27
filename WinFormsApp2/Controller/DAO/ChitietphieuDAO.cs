@@ -134,7 +134,7 @@ namespace QuanLySuShi.Controller.DAO
 
         public static decimal GetTongSoTienByMaPhieu(string maPhieu)
         {
-            string query = "SELECT SUM(SoLuong * Gia) AS TongSoTien FROM ChiTietPhieuDat WHERE MaPhieu = @MaPhieu";
+            string query = "SELECT SUM(Gia) AS TongSoTien FROM ChiTietPhieuDat WHERE MaPhieu = @MaPhieu";
 
             var parameters = new Dictionary<string, object>
             {

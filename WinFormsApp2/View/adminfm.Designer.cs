@@ -31,8 +31,8 @@
             tabPage7 = new TabPage();
             groupBox2 = new GroupBox();
             lblTaiKhoan = new Label();
-            lblMatKhau = new Label();
             txtTaiKhoan = new TextBox();
+            lblMatKhau = new Label();
             txtMatKhau = new TextBox();
             groupBox1 = new GroupBox();
             cboGioiTinh = new ComboBox();
@@ -43,20 +43,20 @@
             lblBoPhan = new Label();
             lblNgayVaoLam = new Label();
             lblDiaChi = new Label();
+            lblNgaySinh = new Label();
             txtDiaChi = new TextBox();
-            lblHoTen = new Label();
+            dtpNgaySinh = new DateTimePicker();
             txtHoTen = new TextBox();
+            lblHoTen = new Label();
             dtpNgayVaoLam = new DateTimePicker();
             btnThemNhanVien = new Button();
             tabPage6 = new TabPage();
             panel14 = new Panel();
-            button14 = new Button();
             button15 = new Button();
             button16 = new Button();
             button17 = new Button();
             dataGridView6 = new DataGridView();
             panel15 = new Panel();
-            textBox16 = new TextBox();
             label14 = new Label();
             textBox17 = new TextBox();
             label15 = new Label();
@@ -67,7 +67,6 @@
             button18 = new Button();
             tabPage5 = new TabPage();
             panel11 = new Panel();
-            button11 = new Button();
             button10 = new Button();
             button9 = new Button();
             button12 = new Button();
@@ -108,6 +107,8 @@
             tbtongdanhthu = new TextBox();
             dtgvDoanhthu = new DataGridView();
             tabPage2 = new TabPage();
+            dtpcnsTo = new DateTimePicker();
+            dtpcnsfrom = new DateTimePicker();
             dtgvcns = new DataGridView();
             panel8 = new Panel();
             cbbchuyenbophancns = new ComboBox();
@@ -132,11 +133,12 @@
             btTimkiem = new Button();
             label5 = new Label();
             label6 = new Label();
+            label40 = new Label();
+            label39 = new Label();
             tabPage1 = new TabPage();
             panel6 = new Panel();
             textBox26 = new TextBox();
             comboBox1 = new ComboBox();
-            textBox5 = new TextBox();
             label4 = new Label();
             label3 = new Label();
             label2 = new Label();
@@ -151,15 +153,10 @@
             textBox1 = new TextBox();
             button4 = new Button();
             panel3 = new Panel();
-            button5 = new Button();
             button3 = new Button();
             button2 = new Button();
             button1 = new Button();
             tabControl1 = new TabControl();
-            dtpcnsfrom = new DateTimePicker();
-            dtpcnsTo = new DateTimePicker();
-            label39 = new Label();
-            label40 = new Label();
             dgvThucDon = new DataGridView();
             txtMaThucDon = new TextBox();
             txtTenThucDon = new TextBox();
@@ -172,12 +169,8 @@
             btnXoa = new Button();
             btnSua = new Button();
             btnTimKiem = new Button();
-            dtpNgaySinh = new DateTimePicker();
-            lblNgaySinh = new Label();
-            textBox14.ReadOnly = true;
-            textBox13.ReadOnly = false;
-            textBox12.ReadOnly = false;
-            dataGridView5.CellClick += new DataGridViewCellEventHandler(dataGridView5_CellClick);
+            comboBox2 = new ComboBox();
+            comboBox3 = new ComboBox();
             tabPage7.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -210,12 +203,14 @@
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             tabControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvThucDon).BeginInit();
             SuspendLayout();
             // 
             // tabPage7
             // 
             tabPage7.Controls.Add(groupBox2);
             tabPage7.Controls.Add(groupBox1);
+            tabPage7.Controls.Add(btnThemNhanVien);
             tabPage7.Location = new Point(4, 29);
             tabPage7.Name = "tabPage7";
             tabPage7.Padding = new Padding(3);
@@ -226,37 +221,47 @@
             // 
             // groupBox2
             // 
-            groupBox2.Text = "Tài Khoản";
+            groupBox2.Controls.Add(lblTaiKhoan);
+            groupBox2.Controls.Add(txtTaiKhoan);
+            groupBox2.Controls.Add(lblMatKhau);
+            groupBox2.Controls.Add(txtMatKhau);
             groupBox2.Location = new Point(430, 62);
+            groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(300, 150);
-            groupBox2.Controls.AddRange(new Control[] {
-                lblTaiKhoan,
-                txtTaiKhoan,
-                lblMatKhau,
-                txtMatKhau
-            });
+            groupBox2.TabIndex = 0;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Tài Khoản";
+            // 
+            // lblTaiKhoan
+            // 
             lblTaiKhoan.Location = new Point(20, 30);
+            lblTaiKhoan.Name = "lblTaiKhoan";
             lblTaiKhoan.Size = new Size(80, 23);
+            lblTaiKhoan.TabIndex = 0;
             lblTaiKhoan.Text = "Tài khoản";
+            // 
+            // txtTaiKhoan
+            // 
             txtTaiKhoan.Location = new Point(110, 30);
-            txtTaiKhoan.Size = new Size(170, 23);
+            txtTaiKhoan.Name = "txtTaiKhoan";
+            txtTaiKhoan.Size = new Size(170, 27);
+            txtTaiKhoan.TabIndex = 1;
+            // 
+            // lblMatKhau
+            // 
             lblMatKhau.Location = new Point(20, 70);
+            lblMatKhau.Name = "lblMatKhau";
             lblMatKhau.Size = new Size(80, 23);
+            lblMatKhau.TabIndex = 2;
             lblMatKhau.Text = "Mật khẩu";
+            // 
+            // txtMatKhau
+            // 
             txtMatKhau.Location = new Point(110, 70);
-            txtMatKhau.Size = new Size(170, 23);
+            txtMatKhau.Name = "txtMatKhau";
+            txtMatKhau.Size = new Size(170, 27);
+            txtMatKhau.TabIndex = 3;
             txtMatKhau.UseSystemPasswordChar = true;
-            btnThemNhanVien = new Button();
-            btnThemNhanVien.Location = new Point(425, 200);
-            btnThemNhanVien.Name = "btnThemNhanVien";
-            btnThemNhanVien.Size = new Size(150, 40);
-            btnThemNhanVien.Text = "Thêm nhân viên";
-            btnThemNhanVien.UseVisualStyleBackColor = true;
-            btnThemNhanVien.Click += btnThemNhanVien_Click;
-            if (tabPage7 != null)
-            {
-                tabPage7.Controls.Add(btnThemNhanVien);
-            }
             // 
             // groupBox1
             // 
@@ -268,7 +273,6 @@
             groupBox1.Controls.Add(lblBoPhan);
             groupBox1.Controls.Add(lblNgayVaoLam);
             groupBox1.Controls.Add(lblDiaChi);
-            groupBox1.Controls.Add(lblNgaySinh);
             groupBox1.Controls.Add(txtDiaChi);
             groupBox1.Controls.Add(dtpNgaySinh);
             groupBox1.Controls.Add(lblNgaySinh);
@@ -281,8 +285,6 @@
             groupBox1.TabIndex = 8;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin cá nhân";
-            lblHoTen.Text = "Họ tên";
-            lblHoTen.Location = new Point(17, 40);
             // 
             // cboGioiTinh
             // 
@@ -370,12 +372,27 @@
             txtDiaChi.Size = new Size(193, 27);
             txtDiaChi.TabIndex = 2;
             // 
+            // dtpNgaySinh
+            // 
+            dtpNgaySinh.Location = new Point(124, 69);
+            dtpNgaySinh.Name = "dtpNgaySinh";
+            dtpNgaySinh.Size = new Size(193, 27);
+            dtpNgaySinh.TabIndex = 2;
+            // 
             // txtHoTen
             // 
             txtHoTen.Location = new Point(124, 36);
             txtHoTen.Name = "txtHoTen";
             txtHoTen.Size = new Size(193, 27);
             txtHoTen.TabIndex = 0;
+            // 
+            // lblHoTen
+            // 
+            lblHoTen.Location = new Point(17, 40);
+            lblHoTen.Name = "lblHoTen";
+            lblHoTen.Size = new Size(100, 23);
+            lblHoTen.TabIndex = 5;
+            lblHoTen.Text = "Họ tên";
             // 
             // dtpNgayVaoLam
             // 
@@ -386,7 +403,7 @@
             // 
             // btnThemNhanVien
             // 
-            btnThemNhanVien.Location = new Point(301, 7);
+            btnThemNhanVien.Location = new Point(636, 328);
             btnThemNhanVien.Name = "btnThemNhanVien";
             btnThemNhanVien.Size = new Size(94, 42);
             btnThemNhanVien.TabIndex = 4;
@@ -410,7 +427,6 @@
             // 
             // panel14
             // 
-            panel14.Controls.Add(button14);
             panel14.Controls.Add(button15);
             panel14.Controls.Add(button16);
             panel14.Controls.Add(button17);
@@ -418,15 +434,6 @@
             panel14.Name = "panel14";
             panel14.Size = new Size(398, 45);
             panel14.TabIndex = 6;
-            // 
-            // button14
-            // 
-            button14.Location = new Point(301, 1);
-            button14.Name = "button14";
-            button14.Size = new Size(94, 42);
-            button14.TabIndex = 4;
-            button14.Text = "Sửa";
-            button14.UseVisualStyleBackColor = true;
             // 
             // button15
             // 
@@ -467,7 +474,7 @@
             // 
             // panel15
             // 
-            panel15.Controls.Add(textBox16);
+            panel15.Controls.Add(comboBox2);
             panel15.Controls.Add(label14);
             panel15.Controls.Add(textBox17);
             panel15.Controls.Add(label15);
@@ -477,13 +484,6 @@
             panel15.Name = "panel15";
             panel15.Size = new Size(372, 329);
             panel15.TabIndex = 9;
-            // 
-            // textBox16
-            // 
-            textBox16.Location = new Point(114, 87);
-            textBox16.Name = "textBox16";
-            textBox16.Size = new Size(237, 27);
-            textBox16.TabIndex = 4;
             // 
             // label14
             // 
@@ -513,7 +513,7 @@
             // textBox18
             // 
             textBox18.Location = new Point(114, 21);
-            textBox18.Name = "txtMaThucDon";
+            textBox18.Name = "textBox18";
             textBox18.ReadOnly = true;
             textBox18.Size = new Size(237, 27);
             textBox18.TabIndex = 4;
@@ -569,7 +569,6 @@
             // 
             // panel11
             // 
-            panel11.Controls.Add(button11);
             panel11.Controls.Add(button10);
             panel11.Controls.Add(button9);
             panel11.Controls.Add(button12);
@@ -578,20 +577,10 @@
             panel11.Size = new Size(398, 45);
             panel11.TabIndex = 2;
             // 
-            // button11
-            // 
-            button11.Location = new Point(301, 1);
-            button11.Name = "btnThem";
-            button11.Size = new Size(94, 42);
-            button11.TabIndex = 4;
-            button11.Text = "Thêm";
-            button11.UseVisualStyleBackColor = true;
-            button11.Click += btnThem_Click;
-            // 
             // button10
             // 
             button10.Location = new Point(203, 0);
-            button10.Name = "btnXoa";
+            button10.Name = "button10";
             button10.Size = new Size(94, 42);
             button10.TabIndex = 3;
             button10.Text = "Xóa";
@@ -601,7 +590,7 @@
             // button9
             // 
             button9.Location = new Point(103, 0);
-            button9.Name = "btnSua";
+            button9.Name = "button9";
             button9.Size = new Size(94, 42);
             button9.TabIndex = 3;
             button9.Text = "Sửa";
@@ -621,10 +610,11 @@
             // 
             dataGridView5.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView5.Location = new Point(13, 75);
-            dataGridView5.Name = "dgvThucDon";
+            dataGridView5.Name = "dataGridView5";
             dataGridView5.RowHeadersWidth = 51;
             dataGridView5.Size = new Size(392, 323);
             dataGridView5.TabIndex = 4;
+            dataGridView5.CellClick += dataGridView5_CellClick;
             // 
             // panel12
             // 
@@ -642,7 +632,7 @@
             // textBox12
             // 
             textBox12.Location = new Point(114, 87);
-            textBox12.Name = "txtMaThucDon";
+            textBox12.Name = "textBox12";
             textBox12.ReadOnly = true;
             textBox12.Size = new Size(237, 27);
             textBox12.TabIndex = 4;
@@ -659,8 +649,7 @@
             // textBox13
             // 
             textBox13.Location = new Point(114, 54);
-            textBox13.Name = "txtTenThucDon";
-            textBox13.ReadOnly = false;
+            textBox13.Name = "textBox13";
             textBox13.Size = new Size(237, 27);
             textBox13.TabIndex = 4;
             // 
@@ -676,7 +665,7 @@
             // textBox14
             // 
             textBox14.Location = new Point(114, 21);
-            textBox14.Name = "txtKhuVuc";
+            textBox14.Name = "textBox14";
             textBox14.ReadOnly = true;
             textBox14.Size = new Size(237, 27);
             textBox14.TabIndex = 4;
@@ -973,6 +962,20 @@
             tabPage2.Text = "Chuyển nhân sự";
             tabPage2.UseVisualStyleBackColor = true;
             // 
+            // dtpcnsTo
+            // 
+            dtpcnsTo.Location = new Point(276, 372);
+            dtpcnsTo.Name = "dtpcnsTo";
+            dtpcnsTo.Size = new Size(250, 27);
+            dtpcnsTo.TabIndex = 58;
+            // 
+            // dtpcnsfrom
+            // 
+            dtpcnsfrom.Location = new Point(10, 372);
+            dtpcnsfrom.Name = "dtpcnsfrom";
+            dtpcnsfrom.Size = new Size(250, 27);
+            dtpcnsfrom.TabIndex = 58;
+            // 
             // dtgvcns
             // 
             dtgvcns.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -1201,6 +1204,24 @@
             label6.TabIndex = 49;
             label6.Text = "Chi nhánh";
             // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Location = new Point(276, 349);
+            label40.Name = "label40";
+            label40.Size = new Size(104, 20);
+            label40.TabIndex = 3;
+            label40.Text = "Ngày kết thúc ";
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Location = new Point(10, 349);
+            label39.Name = "label39";
+            label39.Size = new Size(99, 20);
+            label39.TabIndex = 3;
+            label39.Text = "Ngày bắt đầu";
+            // 
             // tabPage1
             // 
             tabPage1.Controls.Add(panel6);
@@ -1218,8 +1239,8 @@
             // panel6
             // 
             panel6.Controls.Add(textBox26);
+            panel6.Controls.Add(comboBox3);
             panel6.Controls.Add(comboBox1);
-            panel6.Controls.Add(textBox5);
             panel6.Controls.Add(label4);
             panel6.Controls.Add(label3);
             panel6.Controls.Add(label2);
@@ -1246,13 +1267,6 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(262, 28);
             comboBox1.TabIndex = 5;
-            // 
-            // textBox5
-            // 
-            textBox5.Location = new Point(89, 153);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(262, 27);
-            textBox5.TabIndex = 4;
             // 
             // label4
             // 
@@ -1369,7 +1383,6 @@
             // 
             // panel3
             // 
-            panel3.Controls.Add(button5);
             panel3.Controls.Add(button3);
             panel3.Controls.Add(button2);
             panel3.Controls.Add(button1);
@@ -1377,15 +1390,6 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(398, 45);
             panel3.TabIndex = 0;
-            // 
-            // button5
-            // 
-            button5.Location = new Point(301, 1);
-            button5.Name = "button5";
-            button5.Size = new Size(94, 42);
-            button5.TabIndex = 4;
-            button5.Text = "Sửa";
-            button5.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
@@ -1429,43 +1433,12 @@
             tabControl1.Size = new Size(799, 438);
             tabControl1.TabIndex = 0;
             // 
-            // dtpcnsfrom
-            // 
-            dtpcnsfrom.Location = new Point(10, 372);
-            dtpcnsfrom.Name = "dtpcnsfrom";
-            dtpcnsfrom.Size = new Size(250, 27);
-            dtpcnsfrom.TabIndex = 58;
-            // 
-            // dtpcnsTo
-            // 
-            dtpcnsTo.Location = new Point(276, 372);
-            dtpcnsTo.Name = "dtpcnsTo";
-            dtpcnsTo.Size = new Size(250, 27);
-            dtpcnsTo.TabIndex = 58;
-            // 
-            // label39
-            // 
-            label39.AutoSize = true;
-            label39.Location = new Point(10, 349);
-            label39.Name = "label39";
-            label39.Size = new Size(99, 20);
-            label39.TabIndex = 3;
-            label39.Text = "Ngày bắt đầu";
-            // 
-            // label40
-            // 
-            label40.AutoSize = true;
-            label40.Location = new Point(276, 349);
-            label40.Name = "label40";
-            label40.Size = new Size(104, 20);
-            label40.TabIndex = 3;
-            label40.Text = "Ngày kết thúc ";
-            // 
             // dgvThucDon
             // 
             dgvThucDon.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvThucDon.Location = new Point(20, 100);
             dgvThucDon.Name = "dgvThucDon";
+            dgvThucDon.RowHeadersWidth = 51;
             dgvThucDon.Size = new Size(600, 300);
             dgvThucDon.TabIndex = 0;
             // 
@@ -1473,25 +1446,29 @@
             // 
             txtMaThucDon.Location = new Point(120, 20);
             txtMaThucDon.Name = "txtMaThucDon";
-            txtMaThucDon.Size = new Size(200, 25);
+            txtMaThucDon.Size = new Size(200, 27);
+            txtMaThucDon.TabIndex = 0;
             // 
             // txtTenThucDon
             // 
             txtTenThucDon.Location = new Point(120, 50);
             txtTenThucDon.Name = "txtTenThucDon";
-            txtTenThucDon.Size = new Size(200, 25);
+            txtTenThucDon.Size = new Size(200, 27);
+            txtTenThucDon.TabIndex = 0;
             // 
             // txtKhuVuc
             // 
             txtKhuVuc.Location = new Point(120, 80);
             txtKhuVuc.Name = "txtKhuVuc";
-            txtKhuVuc.Size = new Size(200, 25);
+            txtKhuVuc.Size = new Size(200, 27);
+            txtKhuVuc.TabIndex = 0;
             // 
             // txtTimKiem
             // 
             txtTimKiem.Location = new Point(420, 20);
             txtTimKiem.Name = "txtTimKiem";
-            txtTimKiem.Size = new Size(200, 25);
+            txtTimKiem.Size = new Size(200, 27);
+            txtTimKiem.TabIndex = 0;
             // 
             // lblMaThucDon
             // 
@@ -1560,21 +1537,21 @@
             btnTimKiem.UseVisualStyleBackColor = true;
             btnTimKiem.Click += btnTimKiem_Click;
             // 
-            // dtpNgaySinh
+            // comboBox2
             // 
-            dtpNgaySinh.Location = new Point(124, 69);
-            dtpNgaySinh.Name = "dtpNgaySinh";
-            dtpNgaySinh.Size = new Size(193, 27);
-            dtpNgaySinh.TabIndex = 2;
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(114, 94);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(237, 28);
+            comboBox2.TabIndex = 5;
             // 
-            // lblNgaySinh
+            // comboBox3
             // 
-            lblNgaySinh.AutoSize = true;
-            lblNgaySinh.Location = new Point(17, 72);
-            lblNgaySinh.Name = "lblNgaySinh";
-            lblNgaySinh.Size = new Size(74, 20);
-            lblNgaySinh.TabIndex = 3;
-            lblNgaySinh.Text = "Ngày sinh";
+            comboBox3.FormattingEnabled = true;
+            comboBox3.Location = new Point(89, 152);
+            comboBox3.Name = "comboBox3";
+            comboBox3.Size = new Size(262, 28);
+            comboBox3.TabIndex = 5;
             // 
             // adminfm
             // 
@@ -1630,6 +1607,7 @@
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvThucDon).EndInit();
             ResumeLayout(false);
         }
 
@@ -1657,13 +1635,11 @@
         private Button btnThemNhanVien;
         private TabPage tabPage6;
         private Panel panel14;
-        private Button button14;
         private Button button15;
         private Button button16;
         private Button button17;
         private DataGridView dataGridView6;
         private Panel panel15;
-        private TextBox textBox16;
         private Label label14;
         private TextBox textBox17;
         private Label label15;
@@ -1674,7 +1650,6 @@
         private Button button18;
         private TabPage tabPage5;
         private Panel panel11;
-        private Button button11;
         private Button button10;
         private Button button9;
         private Button button12;
@@ -1725,7 +1700,6 @@
         private Panel panel6;
         private TextBox textBox26;
         private ComboBox comboBox1;
-        private TextBox textBox5;
         private Label label4;
         private Label label3;
         private Label label2;
@@ -1740,7 +1714,6 @@
         private TextBox textBox1;
         private Button button4;
         private Panel panel3;
-        private Button button5;
         private Button button3;
         private Button button2;
         private Button button1;
@@ -1781,5 +1754,7 @@
         private Button btnTimKiem;
         private DateTimePicker dtpNgaySinh;
         private Label lblNgaySinh;
+        private ComboBox comboBox2;
+        private ComboBox comboBox3;
     }
 }

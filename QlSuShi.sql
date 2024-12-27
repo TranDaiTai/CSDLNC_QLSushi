@@ -126,9 +126,13 @@ CREATE TABLE [dbo].[KhachHang] (
     Email NCHAR(50) NULL ,
     CCCD CHAR(12) NULL ,
 	GioiTinh NVARCHAR(10)  NULL,
-	TaiKhoan nvarchar(50)   null ,
+	TaiKhoan nvarchar(50)  unique ,
 	MatKhau nvarchar(50)  null
 );
+CREATE UNIQUE NONCLUSTERED INDEX idx_taikhoan_notnull
+ON KhachHang(TaiKhoan) 
+WHERE TaiKhoan IS NOT NULL;
+
 
 GO
 CREATE TABLE [dbo].[LichSuLamViec](

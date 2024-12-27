@@ -76,6 +76,7 @@ namespace QuanLySuShi
         void LoadDonHang() //Tải đơn hànghàng
         {
             dataGridView2.DataSource = PhieudatmonDAO.GetPhieuDatMonByMaKhachHang((Dangnhap.user as KhachHang).MaDinhDanh);
+            dataGridView2.Columns["MaKhachHang"].Visible = false;
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
@@ -522,11 +523,61 @@ namespace QuanLySuShi
 
         }
 
-        private void bthuydon_Click(object sender, EventArgs e) //HỦy đơn
+        private void bthuydon_Click(object sender, EventArgs e) // Hủy đơn
         {
+            try
+            {
+                // Kiểm tra xem người dùng đã chọn hàng nào trong DataGridView chưa
+                if (select_row_dtgv_don_hang != null)
+                {
+                    // Lấy giá trị của cột "MaPhieu" trong hàng được chọn
+                    string maPhieu = select_row_dtgv_don_hang.Cells["MaPhieu"].Value.ToString();
 
+                    string nhanVienLap = select_row_dtgv_don_hang.Cells["NhanVienLap"].Value?.ToString();
+                    if (!string.IsNullOrEmpty(nhanVienLap))
+                    {
+                        MessageBox.Show("Đơn đã được xác nhận không thể xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return; // Không thực hiện xóa
+                    }
+
+                    // Hiển thị hộp thoại xác nhận
+                    DialogResult result = MessageBox.Show(
+                        $"Bạn có chắc chắn muốn hủy đơn có mã phiếu: {maPhieu}?",
+                        "Xác nhận hủy đơn",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question
+                    );
+
+                    if (result == DialogResult.Yes)
+                    {
+                        // Gọi hàm xóa phiếu đặt món
+                        HoaDonDAO.DeleteHoaDonByMaPhieu(maPhieu);
+                        bool isDeleted = PhieudatmonTrucTuyenDAO.DeletePhieuDatMonTrucTuyen(maPhieu);
+
+                        if (isDeleted)
+                        {
+                            MessageBox.Show("Đơn hàng đã được hủy thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // Cập nhật lại DataGridView sau khi xóa
+                            LoadDonHang(); // Hàm này cần được định nghĩa để tải lại dữ liệu
+                        }
+                        else
+                        {
+                            MessageBox.Show("Không thể hủy đơn hàng. Vui lòng thử lại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng chọn một đơn hàng để hủy.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                select_row_dtgv_don_hang = null; 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
         private void btThaydoi_Click(object sender, EventArgs e)
         {
 

@@ -122,6 +122,19 @@ namespace QuanLySuShi.Controller.DAO
             return hoaDonList;
         }
 
+        public static bool DeleteHoaDonByMaPhieu(string maPhieu)
+        {
+            // Câu truy vấn SQL để xóa hóa đơn theo mã phiếu
+            string query = "DELETE FROM HoaDon WHERE MaPhieu = @MaPhieu";
 
+            // Tạo tham số cho truy vấn
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+    {
+        { "@MaPhieu", maPhieu }
+    };
+
+            // Thực thi truy vấn và trả về kết quả
+            return DataProvider.ExecuteNonQuery(query, parameters);
+        }
     }
 }
