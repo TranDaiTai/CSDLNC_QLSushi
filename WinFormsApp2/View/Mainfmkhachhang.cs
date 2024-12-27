@@ -439,11 +439,11 @@ namespace QuanLySuShi
             }
 
             soLuongKhach = Convert.ToInt32(numericUpDown1.Value);
-            
+
 
             // Lấy mã phiếu mới
             string maPhieu = PhieudatmonDAO.GeNextPhieuDatMon();
-            
+
             // Tạo phiếu đặt món
             bool isPhieuCreated = PhieudatmonDAO.CreatePhieuDatMon(
                 null,
@@ -532,5 +532,9 @@ namespace QuanLySuShi
 
         }
 
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

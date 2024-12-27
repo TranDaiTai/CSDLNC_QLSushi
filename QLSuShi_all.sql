@@ -1082,13 +1082,45 @@ BEGIN
 END
 GO
 
-SELECT @@SERVERNAME AS ServerName;
-select * from KhachHang
-select * from UuDai
+-----------22
+CREATE FUNCTION fn_GetNextMaBan()  
+RETURNS CHAR(10)  
+AS  
+BEGIN  
+    DECLARE @MaxMaBan CHAR(10);  
+    DECLARE @NextMaBan CHAR(10);  
+    DECLARE @Prefix CHAR(2) = 'B'; -- Tiền tố cho mã bàn (B = Bàn)  
+  
+    -- Lấy mã bàn lớn nhất hiện tại  
+    SELECT @MaxMaBan = MAX(MaBan) FROM PhieuDatMonTrucTuyenTaiQuan;  
+  
+    -- Nếu không có mã bàn nào, bắt đầu từ B001  
+    IF @MaxMaBan IS NULL  
+        SET @NextMaBan = CONCAT(@Prefix, '001');  
+    ELSE  
+    BEGIN  
+        -- Lấy phần số, tăng giá trị lên 1, và tạo mã mới  
+        SET @NextMaBan = CONCAT(@Prefix, RIGHT('000' + CAST(CAST(SUBSTRING(@MaxMaBan, 2, LEN(@MaxMaBan) - 1) AS INT) + 1 AS VARCHAR), 3));  
+    END  
+  
+    RETURN @NextMaBan;  
+END;
 
-SELECT TABLE_NAME 
-FROM INFORMATION_SCHEMA.TABLES
-WHERE TABLE_TYPE = 'BASE TABLE'
-ORDER BY TABLE_NAME;
+--SELECT @@SERVERNAME AS ServerName;
+--select * from KhachHang
+--select * from UuDai
 
-select * from HoaDon
+--SELECT TABLE_NAME 
+--FROM INFORMATION_SCHEMA.TABLES
+--WHERE TABLE_TYPE = 'BASE TABLE'
+--ORDER BY TABLE_NAME;
+
+--select * from HoaDon
+
+--SELECT ROUTINE_NAME, ROUTINE_TYPE
+--FROM INFORMATION_SCHEMA.ROUTINES
+--WHERE ROUTINE_TYPE = 'FUNCTION';
+
+--EXEC sp_helptext 'dbo.fn_GetNextMaBan';
+
+

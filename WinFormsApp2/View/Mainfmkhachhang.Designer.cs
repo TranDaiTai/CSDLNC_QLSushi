@@ -166,6 +166,7 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(800, 397);
             tabControl1.TabIndex = 6;
+            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
             // 
             // tabPage1
             // 
@@ -438,7 +439,6 @@
             numericUpDown1.Size = new Size(58, 27);
             numericUpDown1.TabIndex = 34;
             numericUpDown1.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            
             // 
             // btThem
             // 
