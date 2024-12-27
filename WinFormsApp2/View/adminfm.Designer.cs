@@ -1213,7 +1213,7 @@
             btTimkiem.TabIndex = 50;
             btTimkiem.Text = "Tìm kiếm";
             btTimkiem.UseVisualStyleBackColor = true;
-            btTimkiem.Click += btnTimKiem_Click;
+            btTimkiem.Click += btTimkiem_Click;
             // 
             // label5
             // 
